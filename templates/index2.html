@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Caso 2 - Retail{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <!-- Botón de regreso al menú -->
+    <div class="mb-4">
+        <a href="/menu" class="btn btn-dark">⬅ Volver al Menú</a>
+    </div>
+
+    <!-- Título -->
+    <h2 class="text-center border bg-success bg-opacity-25 text-dark p-3 mb-4 rounded">
+        Machine Learning en el Sector Retail 🛒
+    </h2>
+
+    <!-- Contenido -->
+    <div class="bg-light border p-4 rounded" style="text-align: justify;">
+        <p>
+            El <strong>Machine learning en el sector retail</strong> se aplica para 
+            <strong>predecir la demanda de productos, optimizar inventarios y mejorar la experiencia del cliente</strong>. 
+            Gracias a algoritmos de predicción, las empresas pueden anticipar el comportamiento de compra y reducir pérdidas.
+        </p>
+
+        <h4>Aplicaciones del Machine Learning en el sector retail:</h4>
+        <ul>
+
+            <li>* Personalización de la experiencia del cliente</li>
+            <p>
+            El <strong>Machine learning</strong> permite a los retailers ofrecer experiencias personalizadas a sus clientes,
+            analizando el comportamiento de compra, preferencias y patrones de navegación. Con esta información, las empresas 
+            pueden crear campañas de marketing hiperpersonalizadas y ofrecer productos que realmente interesan a cada cliente.
+            Esta personalización no solo mejora la experiencia del cliente, sino que también aumenta la probabilidad de conversión 
+            y la lealtad a largo plazoAdemás, el machine learning puede ayudar a segmentar a los clientes en grupos más específicos,
+            permitiendo a los retailers dirigirse a estos segmentos con mensajes y ofertas aún más personalizados (NETWORKS, 2024)
+            </p>
+
+            <li>* Optimización de la cadena de suministro.</li>
+            <p>
+            El <strong>Machine Learning</strong> ayuda a prever las necesidades futuras basándose en datos históricos, estacionales y tendencias del mercado 
+            <strong>lo que permite a los retailers reducir costos de almacenamiento y evitar la falta o el exceso de productos</strong>. 
+            </p>
+
+            <li>* Precios dinámicos basados en la competencia y la demanda.</li>
+            <p>
+            El <strong>Con el Machine Learning</strong> los retailers pueden ajustar los precios en tiempo real según la demanda, la competencia y otros factores externos. 
+            Esto no solo maximiza los márgenes de ganancia, sino que también mejora la satisfacción del cliente al ofrecer precios competitivos.
+            </p>
+
+            <li>* Detección del Fraude.</li>
+            <p>
+            El <strong>Machine Learning</strong> El machine learning es fundamental en la detección de patrones sospechosos que podrían indicar fraudes en las transacciones 
+            <strong>Esto ayuda a proteger tanto a los negocios como a los clientes de actividades fraudulentas</strong> , manteniendo la integridad del proceso de compra. 
+            Al analizar grandes volúmenes de datos en tiempo real, los sistemas de machine learning pueden identificar rápidamente comportamientos atípicos que podrían indicar un intento de fraude . 
+            </p>
+    
+         <h4>Caso Real: INDITEX</h4>
+        <p>
+            <strong>El Problema:</strong> INDITEX necesitaba optimizar la predicción de la demanda de productos en 
+            diferentes países para evitar tanto el <em>sobrestock</em> como la falta de disponibilidad en tiendas.
+        </p>
+        <p>
+            Para el Proyecto de INDITEX tenian datos de diferentes productos y ventas a lo largo del tiempo durante varios años con lo que se buscaba identificar, <strong>¿Cómo van las ventas de estos años?, ¿cómo van las ventas a futuro?</strong>; y saber si tenia sentido seguir fabricando (Nodd3r, 2025)
+            En el articulo publicado por INDITEX <strong>la-innovacion-vital-para-transformar</strong>. Expresan <em>Tecnología para la eficiencia de nuestras operaciones - La transformación digital que hemos acometido en los últimos años, con especial intensidad en 2020 y 2021, pese a la pandemia de la covid-19, nos permite desarrollar iniciativas y proyectos que nos sitúan a la vanguardia del sector en aspectos puramente tecnológicos como la integración de canales, la anticipación de la demanda o la gestión de. Para ello nos servimos de tecnología de última generación: inteligencia artificial, machine learning, computación en la nube, IoT, Business Analytics, etc (INDITEX, 2021)</em>
+
+        </p>
+        <p>
+            <strong>Algoritmos:</strong> Se aplicaron modelos supervisados como <em>regresión lineal</em> y 
+            <em>redes neuronales</em> los de regresión se enfocan en identificar la línea recta que mejor se ajusta a los datos, minimizando la suma de errores. Y las redes neuronales este algoritmo también puede ser utilizado para problemas de regresión, especialmente cuando las relaciones en los datos no son lineales y complejas
+        </p>
+        <p>
+            <strong>Beneficios:</strong>
+        </p>
+
+        <ul>
+            <li>Identificar las necesidades de los clientes y proponer las acciones necesarias para satisfacerlas, desde el principio de la cadena de distribución hasta la gestión comercial y operativa de la tienda</li>
+            <li>Estimar el volumen de envíos iniciales requeridos para cada tienda, estimar la curva de la demanda y determinar así el stock necesario para asegurar la disponibilidad. (INDITEX, 2021)</li>
+
+        </ul>
+    </div>
+
+</div>
+{% endblock %}
