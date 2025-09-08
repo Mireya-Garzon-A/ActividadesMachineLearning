@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+
+
+    <h2 class="mb-4 text-center">📉 Regresión Lineal</h2>
+
+    <p class="text-center">Este modelo predice la <b>calificación final</b> en función de las <b>horas de estudio</b>.</p>
+
+    <!-- Formulario -->
+    <form method="post" class="text-center">
+        <div class="mb-3">
+            <label for="hours" class="form-label fw-bold">Horas de Estudio</label>
+            <input type="number" step="any" name="hours" id="hours" class="form-control w-25 mx-auto" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Predecir</button>
+        
+    </form>
+
+    <!-- Resultado -->
+    {% if result is not none %}
+    <div class="alert alert-info text-center mt-4">
+        <h4>Calificación Estimada: <span class="fw-bold">{{ result }}</span></h4>
+
+        <div class="text-center mt-4">
+    <img src="{{ url_for('static', filename='images/regresion.png') }}" 
+         alt="Gráfico regresión lineal" class="img-fluid border rounded">
+    </div>
+
+    </div>
+    {% endif %}
+
+    <div class="mt-4">
+    <a href="/menu" class="btn btn-outline-primary">⬅ Volver al Menú</a>
+</div>
+{% endblock %}
