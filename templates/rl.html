@@ -3,9 +3,14 @@
 <div class="container mt-5">
 
 
-    <h2 class="mb-4 text-center">📉 Regresión Lineal</h2>
+   <!-- Título centrado con fondo blanco -->
+    <h2 class="text-center border bg-success bg-opacity-25 text-dark p-3 mb-4 rounded">
+        <strong>📉 Regresión Lineal</strong> 
+    </h2>
 
-    <p class="text-center">Este modelo predice la <b>calificación final</b> en función de las <b>horas de estudio</b>.</p>
+    <p class="text-center bg-white border rounded p-3 mx-auto" style="width: max-content;">
+        Este modelo predice la calificación final en función de las horas de estudio</p>
+
 
     <!-- Formulario -->
     <form method="post" class="text-center">
@@ -13,13 +18,13 @@
             <label for="hours" class="form-label fw-bold">Horas de Estudio</label>
             <input type="number" step="any" name="hours" id="hours" class="form-control w-25 mx-auto" required>
         </div>
-        <button type="submit" class="btn btn-primary">Predecir</button>
+        <button type="submit" class="btn btn-success"><b>Predecir</b></button>
         
     </form>
 
     <!-- Resultado -->
     {% if result is not none %}
-    <div class="alert alert-info text-center mt-4">
+    <div class="alert alert-info text-center bg-success bg-opacity-25  mt-4">
         <h4>Calificación Estimada: <span class="fw-bold">{{ result }}</span></h4>
 
         <div class="text-center mt-4">
@@ -31,6 +36,6 @@
     {% endif %}
 
     <div class="mt-4">
-    <a href="/menu" class="btn btn-outline-primary">⬅ Volver al Menú</a>
+    <a href="/menu" class="btn btn-outline-primary"><b>⬅ Volver al Menú</b></a>
 </div>
 {% endblock %}

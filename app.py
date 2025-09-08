@@ -37,7 +37,7 @@ def LR():
         hours = float(request.form["hours"])
         calculateResult = Relineal.CalculateGrade(hours)
 
-        Relineal.save_plot()# para que nos muestre la grafica
+        Relineal.save_plot(hours,calculateResult )# para que nos muestre la grafica
     return render_template("rl.html", result = calculateResult)
 
 @app.route('/conceptos')
