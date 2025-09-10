@@ -18,11 +18,95 @@
     <!-- Contenido del texto con fondo blanco y borde -->
     <div class="bg-light border p-4 rounded" style="text-align: justify;">
         <p>
-            colocar la informacion 
+            <center>
+            <h3>¿Qué es la regresión lineal?</h3>
+
+            <img src="/static/images/RL.png" alt="Regreción Lineal" class="img-fluid mb-4">
+            </center>
+                <p>
+                La regresión lineal es una técnica de análisis de datos que predice el valor de datos desconocidos 
+                mediante el uso de otro valor de datos relacionado y conocido. Modela matemáticamente la variable 
+                desconocida o dependiente y la variable conocida o independiente como una ecuación lineal. 
+                Por ejemplo, supongamos que tiene datos sobre sus gastos e ingresos del año pasado. 
+                Las técnicas de regresión lineal analizan estos datos y determinan que tus gastos son la mitad de 
+                tus ingresos. Luego calculan un gasto futuro desconocido al reducir a la mitad un ingreso conocido 
+                futuro.
+                </p> 
+            <h3>¿Por qué es importante la regresión lineal?</h3>
+                <p>
+                    Los modelos de regresión lineal son relativamente simples y proporcionan una fórmula matemática fácil 
+                    de interpretar para generar predicciones. La regresión lineal es una técnica estadística establecida 
+                    y se aplica fácilmente al software y a la computación. Las empresas lo utilizan para convertir datos 
+                    sin procesar de manera confiable y predecible en inteligencia empresarial y conocimiento práctico. 
+                    Los científicos de muchos campos, incluidas la biología y las ciencias del comportamiento, ambientales 
+                    y sociales, utilizan la regresión lineal para realizar análisis de datos preliminares y predecir 
+                    tendencias futuras. Muchos métodos de ciencia de datos, como el machine learning y la inteligencia 
+                    artificial, utilizan la regresión lineal para resolver problemas complejos.
+                </p>
+            <h3>¿Qué es la regresión lineal en el machine learning?</h3>
+                <p>
+                    En el machine learning, los programas de computación denominados algoritmos analizan grandes conjuntos 
+                    de datos y trabajan hacia atrás a partir de esos datos para calcular la ecuación de regresión lineal. 
+                    Los científicos de datos primero entrenan el algoritmo en conjuntos de datos conocidos o etiquetados y, 
+                    a continuación, utilizan el algoritmo para predecir valores desconocidos. Los datos de la vida real son 
+                    más complicados que el ejemplo anterior. Es por eso que el análisis de regresión lineal debe modificar o 
+                    transformar matemáticamente los valores de los datos para cumplir con los siguientes cuatro supuestos. <br>
+                       
+                    <h4>Relación lineal</h4> <br>
+                    <p>
+                    Debe existir una relación lineal entre las variables independientes y las dependientes. Para determinar 
+                    esta relación, los científicos de datos crean una gráfica de dispersión (una colección aleatoria de valores 
+                    x e y) para ver si caen a lo largo de una línea recta. De lo contrario, puede aplicar funciones no lineales, 
+                    como la raíz cuadrada o el registro, para crear matemáticamente la relación lineal entre las dos variables. <br>
+                    </p>
+                                     
+                    <h4>Independencia residual</h4> <br>
+                    
+                    <p>
+                        Los científicos de datos utilizan residuos para medir la precisión de la predicción. Un residuo es la diferencia 
+                    entre los datos observados y el valor previsto. Los residuos no deben tener un patrón identificable entre ellos. 
+                    Por ejemplo, no querrá que los residuos crezcan con el tiempo. Puede utilizar diferentes pruebas matemáticas, como 
+                    la prueba de Durbin-Watson, para determinar la independencia residual. Puede usar datos ficticios para reemplazar 
+                    cualquier variación de datos, como los datos estacionales. <br>
+                    </p>
+                    
+                    <h4>Normalidad</h4> <br>
+                    <P>
+                        Las técnicas de representación gráfica, como las gráficas Q-Q, determinan si los residuos se distribuyen normalmente. 
+                    Los residuos deben caer a lo largo de una línea diagonal en el centro de la gráfica. Si los residuos no están normalizados, 
+                    puede probar los datos para detectar valores atípicos aleatorios o valores que no sean típicos. Eliminar los valores atípicos 
+                    o realizar transformaciones no lineales puede solucionar el problema. <br>
+                    </P>
+                    
+                    
+                    <h4>Homocedasticidad</h4> <br>
+                    <P>
+                        La homocedasticidad supone que los residuos tienen una variación constante o desviación estándar de la media para cada valor 
+                    de x. De lo contrario, es posible que los resultados del análisis no sean precisos. Si no se cumple esta suposición, es posible 
+                    que tenga que cambiar la variable dependiente. Dado que la variación se produce de forma natural en grandes conjuntos de datos, 
+                    tiene sentido cambiar la escala de la variable dependiente. Por ejemplo, en lugar de usar el tamaño de la población para predecir 
+                    la cantidad de estaciones de bomberos en una ciudad, podría usar el tamaño de la población para predecir la cantidad de estaciones 
+                    de bomberos por persona.
+
+                    </P>
+                    
+
+                </p>
         
         </p>
         <!--Agregar mas parrafo -->
     </div>
+
+    <h5>Referencias:</h5>
+            <li>
+                <span class="author">Amazon Web Services.</span>
+                <span class="year">(s. f.).</span>
+                <em class="title">¿Qué es la regresión lineal?</em>
+                <span class="retrieval">Recuperado el 10 de septiembre de 2025, de</span>
+                <a href="https://aws.amazon.com/es/what-is/linear-regression/" target="_blank" rel="noopener noreferrer">
+                    https://aws.amazon.com/es/what-is/linear-regression/
+                </a>
+            </li>
 
 </div>
 {% endblock %}
