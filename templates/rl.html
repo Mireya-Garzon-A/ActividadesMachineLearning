@@ -2,34 +2,35 @@
 {% block content %}
 <div class="container mt-5">
 
-
    <!-- Título centrado con fondo blanco -->
     <h2 class="text-center border bg-success bg-opacity-25 text-dark p-3 mb-4 rounded">
-        <strong>📉 Regresión Lineal</strong> 
+        <strong>🩸 Predicción de Cantidad de Sangre</strong> 
     </h2>
 
     <p class="text-center bg-white border rounded p-3 mx-auto" style="width: max-content;">
-        Este modelo predice la calificación final en función de las horas de estudio</p>
-
+        Este modelo predice la cantidad de sangre en función de la altitud y frecuencia respiratoria</p>
 
     <!-- Formulario -->
-    <form method="post" class="text-center">
-        <div class="mb-3">
-            <label for="hours" class="form-label fw-bold">Horas de Estudio</label>
-            <input type="number" step="any" name="hours" id="hours" class="form-control w-25 mx-auto" required>
-        </div>
-        <button type="submit" class="btn btn-success"><b>Predecir</b></button>
-        
-    </form>
+<form method="post" class="text-center">
+    <div class="mb-3">
+        <label for="altitud" class="form-label fw-bold">Altitud (metros)</label>
+        <input type="number" step="any" name="altitud" id="altitud" class="form-control w-25 mx-auto" required>
+    </div>
+    <div class="mb-3">
+        <label for="frecuencia" class="form-label fw-bold">Frecuencia Respiratoria (resp/min)</label>
+        <input type="number" step="any" name="frecuencia" id="frecuencia" class="form-control w-25 mx-auto" required>
+    </div>
+    <button type="submit" class="btn btn-success"><b>Calcular</b></button>
+</form>
 
     <!-- Resultado -->
     {% if result is not none %}
     <div class="alert alert-info text-center bg-success bg-opacity-25  mt-4">
-        <h4>Calificación Estimada: <span class="fw-bold">{{ result }}</span></h4>
+        <h4>Cantidad de Sangre Estimada: <span class="fw-bold">{{ result }} litros</span></h4>
 
         <div class="text-center mt-4">
     <img src="{{ url_for('static', filename='images/regresion.png') }}" 
-         alt="Gráfico regresión lineal" class="img-fluid border rounded">
+         alt="Gráfico predicción sangre" class="img-fluid border rounded">
     </div>
 
     </div>

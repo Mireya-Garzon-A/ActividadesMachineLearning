@@ -34,10 +34,22 @@ def index4():
 def LR():
     calculateResult = None
     if request.method == "POST":
-        hours = float(request.form["hours"])
-        calculateResult = Relineal.CalculateGrade(hours)
-
-        Relineal.save_plot(hours,calculateResult )# para que nos muestre la grafica
+        try:
+            altitud = float(request.form["altitud"])
+            frecuencia = float(request.form["frecuencia"])
+            calculateResult = Relineal.CalculateBlood(altitud, frecuencia)
+            
+            # Pequeña pausa para evitar conflictos
+            import time
+            time.sleep(0.1)
+            
+            Relineal.save_plot(altitud, frecuencia, calculateResult)
+            
+        except ValueError:
+            return "Por favor ingrese valores numéricos válidos"
+        except Exception as e:
+            return f"Error: {str(e)}"
+    
     return render_template("rl.html", result = calculateResult)
 
 @app.route('/conceptos')
@@ -46,4 +58,4 @@ def conceptos():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5000)  # Especifica el puerto
