@@ -37,7 +37,7 @@ def LR():
         try:
             altitud = float(request.form["altitud"])
             frecuencia = float(request.form["frecuencia"])
-            calculateResult = Relineal.CalculateBlood(altitud, frecuencia)
+            calculateResult = Relineal.CalculateOxygen(altitud, frecuencia)
             
             # Pequeña pausa para evitar conflictos
             import time
