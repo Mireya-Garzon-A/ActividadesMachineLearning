@@ -19,7 +19,7 @@ df = pd.DataFrame(data)
 
 # Definimos Variables
 x = df[["Altitud", "Frecuencia Respiratoria"]]
-y = df[["Saturacion Oxigeno (%)"]]
+y = df[["Saturación de Oxígeno (SpO₂ %)"]]
 
 model = LinearRegression()
 model.fit(x, y)
