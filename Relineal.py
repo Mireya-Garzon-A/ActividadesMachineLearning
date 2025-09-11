@@ -5,14 +5,14 @@ import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
 
-# Datos de ejemplo para altitud y cantidad de oxígeno en sangre
+# Datos realistas para altitud, frecuencia respiratoria y SpO₂ (%)
 data = {
-    "Altitud": [0, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 
-                500, 1500, 2000, 3000, 1000, 2500, 3500, 4000, 0, 2000],
-    "Frecuencia Respiratoria": [12, 14, 16, 18, 20, 22, 24, 26, 28, 30,
-                                13, 17, 19, 23, 15, 21, 25, 27, 11, 18],
-    "Saturacion Oxigeno (%)": [98, 97, 96, 95, 94, 93, 92, 91, 90, 89,
-                               97, 95, 94, 92, 96, 93, 91, 90, 99, 94]
+    "Altitud": [0, 500, 1000, 1500, 2000,
+        2500, 3000, 3500, 4000, 4500],
+    "Frecuencia Respiratoria": [14, 15, 15, 16, 17,
+        18, 20, 22, 24, 26],
+    "Saturación de Oxígeno (SpO₂ %)": [98, 97, 96, 95, 93,
+        91, 89, 86, 84, 81 ]
 }
 
 df = pd.DataFrame(data)
