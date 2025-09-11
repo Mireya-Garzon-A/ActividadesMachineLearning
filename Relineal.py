@@ -8,70 +8,76 @@ from sklearn.linear_model import LinearRegression
 # Datos realistas para altitud, frecuencia respiratoria y SpO₂ (%)
 data = {
     "Altitud": [0, 500, 1000, 1500, 2000,
-        2500, 3000, 3500, 4000, 4500],
+                2500, 3000, 3500, 4000, 4500],
     "Frecuencia Respiratoria": [14, 15, 15, 16, 17,
-        18, 20, 22, 24, 26],
-    "Saturación de Oxígeno (SpO₂ %)": [98, 97, 96, 95, 93,
-        91, 89, 86, 84, 81 ]
+                                18, 20, 22, 24, 26],
+    "Saturacion Oxigeno (%)": [98, 97, 96, 95, 93,
+                               91, 89, 86, 84, 81]
 }
 
 df = pd.DataFrame(data)
 
-# Definimos Variables
+# ------------------------
+# Variables y modelo
+# ------------------------
 x = df[["Altitud", "Frecuencia Respiratoria"]]
-y = df[["Saturación de Oxígeno (SpO₂ %)"]]
+y = df[["Saturacion Oxigeno (%)"]]
 
 model = LinearRegression()
 model.fit(x, y)
 
-# Función para predecir SpO₂
-def CalculateOxygen(altitud: float, frecuencia: float):
-    """Predice la saturación de oxígeno en sangre (SpO₂ %)"""
-    result = model.predict([[altitud, frecuencia]])[0][0]
-    return round(float(result), 2)
+# ------------------------
+# Función de predicción
+# ------------------------
+def CalculateOxygen(altitud: float, frecuencia: float) -> float:
+    """Devuelve SpO₂ (%) predicho, redondeado a 2 decimales."""
+    pred = model.predict([[altitud, frecuencia]])[0][0]
+    return round(float(pred), 2)
 
+# ------------------------
 # Función para graficar
-def save_plot(altitud=None, frecuencia=None, spo2=None):
+# ------------------------
+def save_plot(altitud: float = None, frecuencia: float = None, spo2: float = None):
     try:
-        plt.close('all')
-        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
-        
-        # Gráfico 1: Altitud vs SpO₂
-        ax1.scatter(df["Altitud"], df["Saturacion Oxigeno (%)"], color="blue", label="Datos reales", alpha=0.6)
-        altitud_range = np.linspace(df["Altitud"].min(), df["Altitud"].max(), 100)
-        freq_promedio = df["Frecuencia Respiratoria"].mean()
-        predicciones = [model.predict([[alt, freq_promedio]])[0][0] for alt in altitud_range]
-        ax1.plot(altitud_range, predicciones, color="red", label="Tendencia", linewidth=2)
-        if altitud is not None and spo2 is not None:
-            ax1.scatter(altitud, spo2, color="green", s=100, label="Predicción actual")
-        ax1.set_xlabel("Altitud (metros)")
-        ax1.set_ylabel("Saturación de Oxígeno (%)")
-        ax1.set_title("Altitud vs Saturación de Oxígeno en Sangre")
-        ax1.legend()
-        ax1.grid(True, alpha=0.3)
+        plt.close("all")
+        fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
-        # Gráfico 2: Frecuencia vs SpO₂
-        ax2.scatter(df["Frecuencia Respiratoria"], df["Saturacion Oxigeno (%)"], color="blue", label="Datos reales", alpha=0.6)
-        frecuencia_range = np.linspace(df["Frecuencia Respiratoria"].min(), df["Frecuencia Respiratoria"].max(), 100)
-        altitud_promedio = df["Altitud"].mean()
-        predicciones_frec = [model.predict([[altitud_promedio, freq]])[0][0] for freq in frecuencia_range]
-        ax2.plot(frecuencia_range, predicciones_frec, color="red", label="Tendencia", linewidth=2)
+        # --- Subplot 1: Altitud vs SpO₂
+        ax = axes[0]
+        ax.scatter(df["Altitud"], df["Saturacion Oxigeno (%)"], color="blue",
+                   label="Datos reales", alpha=0.7)
+
+        altitudes = np.linspace(df["Altitud"].min(), df["Altitud"].max(), 200)
+        preds_alt = model.predict(np.column_stack((altitudes,
+                                                   np.full(altitudes.shape, frecuencia if frecuencia else df["Frecuencia Respiratoria"].mean()))))
+        ax.plot(altitudes, preds_alt, color="red", label="Tendencia")
+        if altitud is not None and spo2 is not None:
+            ax.scatter(altitud, spo2, color="green", s=120, edgecolor="black", label="Predicción actual")
+        ax.set_title("Altitud vs Saturación de Oxígeno")
+        ax.set_xlabel("Altitud (m)")
+        ax.set_ylabel("SpO₂ (%)")
+        ax.legend()
+        ax.grid(True, alpha=0.3)
+
+        # --- Subplot 2: Frecuencia vs SpO₂
+        ax = axes[1]
+        ax.scatter(df["Frecuencia Respiratoria"], df["Saturacion Oxigeno (%)"], color="blue",
+                   label="Datos reales", alpha=0.7)
+
+        freqs = np.linspace(df["Frecuencia Respiratoria"].min(), df["Frecuencia Respiratoria"].max(), 200)
+        preds_freq = model.predict(np.column_stack((np.full(freqs.shape, altitud if altitud else df["Altitud"].mean()), freqs)))
+        ax.plot(freqs, preds_freq, color="red", label="Tendencia")
         if frecuencia is not None and spo2 is not None:
-            ax2.scatter(frecuencia, spo2, color="green", s=100, label="Predicción actual")
-        ax2.set_xlabel("Frecuencia Respiratoria (resp/min)")
-        ax2.set_ylabel("Saturación de Oxígeno (%)")
-        ax2.set_title("Frecuencia vs Saturación de Oxígeno en Sangre")
-        ax2.legend()
-        ax2.grid(True, alpha=0.3)
+            ax.scatter(frecuencia, spo2, color="green", s=120, edgecolor="black", label="Predicción actual")
+        ax.set_title("Frecuencia vs Saturación de Oxígeno")
+        ax.set_xlabel("Frecuencia (resp/min)")
+        ax.set_ylabel("SpO₂ (%)")
+        ax.legend()
+        ax.grid(True, alpha=0.3)
 
         plt.tight_layout()
         plt.savefig("static/images/regresion.png")
-        plt.close()
+        plt.close(fig)
 
     except Exception as e:
-        print(f"Error al generar el gráfico: {e}")
-        plt.figure(figsize=(8, 6))
-        plt.scatter([1, 2, 3], [1, 2, 3])
-        plt.title("Gráfico de respaldo")
-        plt.savefig("static/images/regresion.png")
-        plt.close()
+        print(f"Error al generar gráfico: {e}")
