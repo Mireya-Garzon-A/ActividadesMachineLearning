@@ -5,6 +5,8 @@ import Relineal
 
 app = Flask(__name__)
 
+# Casos de uso de Machine Learning
+
 @app.route('/')
 def inicio():
     return render_template('inicio.html')
@@ -29,6 +31,9 @@ def index3():
 def index4():
     return render_template('index4.html')
 
+
+
+# Regresión Lineal
 
 @app.route('/LR', methods = ["GET", "POST"])
 def LR():
@@ -55,6 +60,21 @@ def LR():
 @app.route('/conceptos')
 def conceptos():
     return render_template('conceptos.html')
+
+
+
+# Regresión Logística
+@app.route('/conceptos_reg_logistica')
+    
+def conceptos_reg_logistica():
+    return render_template('conceptos_reg_logistica.html')
+
+@app.route('/ejercicio_reg_logistica')
+def ejercicio_reg_logistica():
+    return render_template('ejercicio_reg_logistica.html')
+
+
+
 
 
 if __name__ == '__main__':

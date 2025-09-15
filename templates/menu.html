@@ -3,34 +3,59 @@
 {% block title %}Menú{% endblock %}
 
 {% block content %}
-<h2 class="text-center border  bg-success bg-opacity-25 text-dark p-3 mb-4 rounded"><strong> 
-    Casos de Uso en Machine Learning 🖥️</strong></h2>
-<div class="list-group">
-    <a href="/index1" class="list-group-item list-group-item-action fw-bold text-success 
-    border border-success mb-0.5"><strong>👨‍⚕️ Machine Learning en el sector de la Salud</strong> </a>
-    <a href="/index2" class="list-group-item list-group-item-action fw-bold text-success 
-    border border-success mb-0.5"><strong>🛒 Machine Learning en el Sector Retail</strong> </a>
-    <a href="/index3" class="list-group-item list-group-item-action fw-bold text-success 
-    border border-success mb-0.5"><strong>🏦 Machine Learning en el Sector Financiero</strong> </a>
-    <a href="/index4" class="list-group-item list-group-item-action fw-bold text-success 
-    border border-success mb-0.5"><strong> 🚘 Machine Learning en el Sector Automotriz</strong></a>
-</div>
 
-<h2 class="text-center border bg-success bg-opacity-25 text-dark p-3 mb-4 rounded"><b>📊Regresion Lineal</b></h2>
 
-<div class=""dropdown text-center mb-4>
-    <button class="btn btn-success dropdown-toggle fw-bold"type= "button" 
-    data-bs-toggle="dropdown"aria aria-expanded="false">
-    Seleccione la opcion
+<!--  casos de uso de machine learning -->
+<h2 class="text-center border bg-success bg-opacity-25 text-dark p-3 mb-4 rounded">
+    <b>🖥️ Casos de Uso en Machine Learning</b>
+</h2>
+
+<div class="dropdown text-start mb-4">
+    <button class="btn btn-success dropdown-toggle fw-bold" type="button" 
+    data-bs-toggle="dropdown" aria-expanded="false">
+        Seleccione la opción
     </button>
     <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/conceptos">📈Conceptos básicos</a></li>
-    <li><a class="dropdown-item" href="/LR">📝 Ejercicio práctico</a></li>
-  </ul>
+        <li><a class="dropdown-item" href="index1">📈👨‍⚕️ Machine Learning en el sector de la Salud</a></li>
+        <li><a class="dropdown-item" href="index2">🛒 Machine Learning en el Sector Retail</a></li>
+        <li><a class="dropdown-item" href="index3">🏦 Machine Learning en el Sector Financiero</a></li>
+        <li><a class="dropdown-item" href="index4">🚘 Machine Learning en el Sector Automotriz</a></li>
+    </ul>
+</div>
+<!--  Regresion lineal -->
+<h2 class="text-center border bg-success bg-opacity-25 text-dark p-3 mb-4 rounded">
+    <b>📊 Regresión Lineal</b>
+</h2>
 
+<div class="dropdown text-start mb-4">
+    <button class="btn btn-success dropdown-toggle fw-bold" type="button" 
+    data-bs-toggle="dropdown" aria-expanded="false">
+        Seleccione la opción
+    </button>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="/conceptos">📈 Conceptos básicos</a></li>
+        <li><a class="dropdown-item" href="/LR">📝 Ejercicio práctico</a></li>
+    </ul>
+</div>
 
+<!--  Regresion logistica -->
+<h2 class="text-center border bg-success bg-opacity-25 text-dark p-3 mb-4 rounded">
+    <b>🔀 Regresión Logística</b>
+</h2>
+
+<div class="dropdown text-start mb-4">
+    <button class="btn btn-success dropdown-toggle fw-bold" type="button" 
+    data-bs-toggle="dropdown" aria-expanded="false">
+        Seleccione la opción
+    </button>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="/conceptos_reg_logistica">📈 Conceptos básicos</a></li>
+        <li><a class="dropdown-item" href="/ejercicio_reg_logistica">📝 Ejercicio práctico</a></li>
+    </ul>
+</div>
 
 <div class="text-center mt-4">
     <a href="/" class="btn btn-secondary"> 👉 Volver al Inicio</a>
 </div>
+
 {% endblock %}
