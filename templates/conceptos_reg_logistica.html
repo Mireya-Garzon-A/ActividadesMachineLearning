@@ -1,11 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conceptos de Regresión Logística</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Caso 1 - Salud{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <!-- Botón de regreso al menú (arriba) -->
+    <div class="mb-4">
+        <a href="/menu" class="btn btn-dark"><b>⬅ Volver al Menú</b></a>
+    </div>
+
+    <!-- Título centrado con fondo blanco -->
+    <h2 class="text-center border bg-success bg-opacity-25 text-dark p-3 mb-4 rounded">
+        <b>Conceptos Básicos</b>
+    </h2>
+
+    <!-- Contenido del texto con fondo blanco y borde -->
+    <div class="bg-light border p-4 rounded" style="text-align: justify;">
+        <p>
+            <center>
+            <h3>¿Qué es la regresión lineal?</h3>
+
+            <img src="/static/images/RL.png" alt="Regreción Lineal" class="img-fluid mb-4">
+            </center>
+                <p>
+                La regresión lineal es una técnica de análisis de datos que predice el valor de datos desconocidos 
+                mediante el uso de otro valor de datos relacionado y conocido. Modela matemáticamente la variable 
+                desconocida o dependiente y la variable conocida o independiente como una ecuación lineal. 
+                Por ejemplo, supongamos que tiene datos sobre sus gastos e ingresos del año pasado. 
+                Las técnicas de regresión lineal analizan estos datos y determinan que tus gastos son la mitad de 
+                tus ingresos. Luego calculan un gasto futuro desconocido al reducir a la mitad un ingreso conocido 
+                futuro.
+                </p> 
+            </di>
+            
+</div>
+{% endblock %}
