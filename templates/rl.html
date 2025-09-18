@@ -9,12 +9,12 @@
 
     <!-- Descripción inicial -->
     <p class="text-center bg-white border rounded p-3 mx-auto" style="max-width: 700px;">
-        Esta herramienta estima la <b>saturación de oxígeno en sangre (SpO₂ %)</b> .
+        Esta herramienta estima la <b>saturación de oxígeno en sangre (SpO₂ %)</b>.
     </p>    
 
     <!-- Explicación técnica -->
     <div class="bg-white border rounded p-4 mx-auto mt-4" style="max-width: 700px;">
-        <h4 class="text-center fw-bold mb-3">¿Cómo se calcula?</h4>
+        <h4 class="text-center fw-bold mb-3"><strong>¿Cómo se calcula?</strong></h4>
         <p>
             Se aplica <b>regresión lineal múltiple</b>, una técnica matemática que encuentra la relación 
             entre varias variables para predecir un resultado.
@@ -47,7 +47,7 @@
             <b>c</b> → es una constante (intercepto).
         </p>
 
-        <h5 class="fw-bold mt-4">Proceso</h5>
+        <h5 class="fw-bold mt-4"><strong>Proceso</strong></h5>
         <ol>
             <li>El usuario ingresa altitud y frecuencia respiratoria.</li>
             <li>El modelo inserta esos valores en la ecuación.</li>
@@ -59,11 +59,11 @@
     <!-- Formulario -->
     <form method="post" class="text-center mt-5">
         <div class="mb-3">
-            <label for="altitud" class="form-label fw-bold">Altitud (metros)</label>
+            <label for="altitud" class="form-label fw-bold"><strong>Altitud (metros)</strong></label>
             <input type="number" step="any" name="altitud" id="altitud" class="form-control w-25 mx-auto" required>
         </div>
         <div class="mb-3">
-            <label for="frecuencia" class="form-label fw-bold">Frecuencia Respiratoria (resp/min)</label>
+            <label for="frecuencia" class="form-label fw-bold"><strong>Frecuencia Respiratoria (resp/min)</strong></label>
             <input type="number" step="any" name="frecuencia" id="frecuencia" class="form-control w-25 mx-auto" required>
         </div>
         <button type="submit" class="btn btn-success"><b>Calcular</b></button>
@@ -72,7 +72,7 @@
     <!-- Resultado -->
     {% if result is not none %}
     <div class="alert alert-info text-center bg-success bg-opacity-25 mt-4">
-        <h4>Saturación de Oxígeno Estimada: 
+        <h4><strong>Saturación de Oxígeno Estimada:</strong> 
             <span class="fw-bold">{{ result }} %</span>
         </h4>
 
