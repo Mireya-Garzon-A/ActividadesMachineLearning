@@ -3,33 +3,68 @@
 {% block title %}Inicio{% endblock %}
 
 {% block content %}
-<div class="text-center">
-    <h1 class="text-center border bg-success bg-opacity-25 text-dark p-3 mb-4 rounded"><strong>Aplicación de Machine Learning Supervisado</strong> </h1>
-    <p class="lead bg-texto-blanco">
-        ML supervisado <strong> es una técnica que entrena modelos a partir
-         de datos <br> etiquetados para predecir o clasificar 
-         resultados futuros con base en patrones aprendidos.<br></p>
+<div class="container mt-5">
 
-         <h1 class="text-center border bg-success bg-opacity-25 text-dark p-3 mb-4 rounded"><strong>Regresión Lineal</strong></h1>
-    <p class="lead bg-texto-blanco">
-        La regresión lineal en <stron>Machine Learning</stron> es un algoritmo supervisado 
-        que modela la relación entre una variable independiente y una dependiente 
-        mediante una línea recta para predecir valores continuos..<br><br> 
+    <!-- Título principal -->
+    <div class="text-center mb-5">
+        <h1 class="border bg-success bg-opacity-25 text-dark p-4 rounded shadow-sm">
+            <i class="bi bi-robot"></i> Aplicación de Machine Learning Supervisado
+        </h1>
+        <p class="lead mt-3" style="text-align: justify;">
+            El <strong>Machine Learning supervisado</strong> es una técnica que entrena modelos a partir de 
+            datos <strong>etiquetados</strong> para predecir o clasificar resultados futuros basándose en patrones aprendidos. 
+        </p>
+    </div>
 
-         <h1 class="text-center border bg-success bg-opacity-25 text-dark p-3 mb-4 rounded"><strong>Regresión Logística</strong></h1>
-    <p class="lead bg-texto-blanco">
-        La regresión logística es un algoritmo de <stron>Machine Learning</stron> usado para clasificar datos en categorías, 
-        estimando probabilidades entre 0 y 1 mediante una función sigmoidea.
-        Es sencillo, rápido y ampliamente aplicado en tareas como detección de fraudes, 
-        diagnóstico médico y análisis de abandono de clientes..<br><br> 
+    <!-- Tarjeta de Regresión Lineal -->
+    <div class="card mb-4 shadow-sm rounded-4 border-0">
+        <div class="card-header bg-primary bg-opacity-25 text-dark text-center rounded-top-4">
+            <h3 class="mb-0"><i class="bi bi-bar-chart-line-fill"></i> Regresión Lineal</h3>
+        </div>
+        <div class="card-body bg-light">
+            <p class="mb-0" style="text-align: justify;">
+                La <strong>regresión lineal</strong> es un algoritmo supervisado que modela la relación 
+                entre una variable independiente y una dependiente mediante una línea recta, 
+                permitiendo predecir valores continuos de manera sencilla y eficiente.
+            </p>
+        </div>
+    </div>
 
-    <p class="lead text-success bg-white border border-success rounded p-3 mx-auto"
-        style="width: max-content; border-width: 3px;">
-        <strong><b>Click en el menú Principal para escoger tu tema</b></strong><br>👇
-    </p>
+    <!-- Tarjeta de Regresión Logística -->
+    <div class="card mb-4 shadow-sm rounded-4 border-0">
+        <div class="card-header bg-success bg-opacity-25 text-dark text-center rounded-top-4">
+            <h3 class="mb-0"><i class="bi bi-arrow-repeat"></i> Regresión Logística</h3>
+        </div>
+        <div class="card-body bg-light">
+            <p class="mb-0" style="text-align: justify;">
+                La <strong>regresión logística</strong> es un algoritmo usado para clasificar datos en categorías, 
+                estimando probabilidades entre 0 y 1 mediante una función sigmoidea. 
+                Es rápido, sencillo y ampliamente aplicado en detección de fraudes, diagnóstico médico 
+                y análisis de abandono de clientes.
+            </p>
+        </div>
+    </div>
 
-    <a href="/menu" class="btn btn-success btn-lg mt-4 d-block mx-auto" style="width: max-content;">
-        <strong>Menú Principal</strong></a>
+    <!-- Mensaje motivador -->
+    <div class="text-center mb-4">
+        <p class="lead text-success bg-white border border-success rounded p-3 mx-auto shadow-sm"
+            style="width: max-content; border-width: 3px;">
+            <strong>Click en el Menú Principal para escoger tu tema 👇</strong>
+        </p>
+    </div>
+
+    <!-- Botón Menú Principal -->
+    <div class="text-center mb-5">
+        <a href="/menu" class="btn btn-success btn-lg shadow-sm" style="width: max-content;">
+            <i class="bi bi-list-task"></i> <strong>Menú Principal</strong>
+        </a>
+    </div>
+
 </div>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
 {% endblock %}
+
 
