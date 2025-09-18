@@ -1,13 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
+{% extends "base.html" %}
+
+{% block title %}Ejercicio - Regresión Logística{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <!-- Botón de regreso al menú -->
+    <div class="mb-4">
+        <a href="/menu" class="btn btn-outline-dark shadow-sm">
+            ⬅ Volver al Menú
+        </a>
+    </div>
+
+    <!-- Título principal -->
+    <h2 class="text-center bg-primary text-white p-3 rounded shadow-sm mb-5">
         Ejercicio de Regresión Logística
-    </title>
-</head>
-<body>
-    
-</body>
-</html>
+    </h2>
+
+    <!-- Formulario en una tarjeta -->
+    <div class="bg-white border rounded p-4 shadow-sm mb-5">
+        <form method="POST">
+
+            <div class="mb-3">
+                <label for="edad" class="form-label"><b>Edad:</b></label>
+                <input type="number" step="any" name="edad" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="tiempo" class="form-label"><b>Tiempo (meses):</b></label>
+                <input type="number" step="any" name="tiempo" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="tipo" class="form-label"><b>Tipo de mascota:</b></label>
+                <select name="tipo" class="form-select" required>
+                    <option value="Perro">Perro</option>
+                    <option value="Gato">Gato</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="visitas" class="form-label"><b>Número de visitas:</b></label>
+                <input type="number" step="any" name="visitas" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 shadow-sm">
+                🔍 Predecir abandono
+            </button>
+        </form>
+    </div>
+
+    <!-- Resultado -->
+    {% if result %}
+        <div class="bg-light border rounded p-4 shadow-sm mb-5">
+            {% if result.error %}
+                <p class="text-danger fw-bold">{{ result.error }}</p>
+            {% else %}
+                <h3 class="text-center text-dark mb-4">Resultado de la predicción</h3>
+                <p><strong>Etiqueta:</strong> {{ result.etiqueta }}</p>
+                <p><strong>Probabilidad de abandono:</strong> {{ result.probabilidad }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <!-- Matriz de confusión -->
+    <div class="text-center">
+        <h3 class="text-secondary">Matriz de Confusión del Modelo</h3>
+        <img src="{{ url_for('static', filename='matriz_confusion.png') }}" 
+             alt="Matriz de Confusión" 
+             class="img-fluid rounded shadow mt-3" 
+             style="max-width:400px;">
+    </div>
+
+</div>
+{% endblock %}
