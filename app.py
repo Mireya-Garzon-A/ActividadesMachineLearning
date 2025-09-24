@@ -3,6 +3,7 @@ from flask import render_template, request
 import Reg_Logis as ReLogistica
 import Relineal
 import pandas as pd
+import knn
 
 
 app = Flask(__name__)
@@ -126,9 +127,60 @@ def ejercicio_reg_logistica():
             result = {"error": f"Error: {str(e)}"}
 
     return render_template('ejercicio_reg_logistica.html', result=result)
+#===============   knn   =====================#
 
+@app.route('/TiposAlgoritmos')
+def tipos_algoritmos():
+    """Muestra conceptos de K-NN."""
+    return render_template('TiposAlgoritmos.html')
 
+@app.route('/ejercicio_knn', methods=['GET', 'POST'])
+def ejercicio_knn():
+    metrics = None
+    pred = None
+    prob = None
 
+    # Recuperar valores previos si existen
+    if request.method == 'POST':
+        if 'train' in request.form:
+            try:
+                metrics = knn.entrenar_modelo()
+                # Mantener predicción previa si existe en el formulario
+                pred = request.form.get('pred')
+                prob = request.form.get('prob')
+            except Exception as e:
+                metrics = {'error': f'Error entrenando: {e}'}
+
+        elif 'predict' in request.form:
+            try:
+                edad = float(request.form['edad'])
+                peso = float(request.form['peso'])
+                frecuencia = float(request.form['frecuencia'])
+                actividad_num = int(request.form['actividad'])
+                threshold = float(request.form.get('threshold', 0.5))
+
+                actividad_map = {1: "Baja", 2: "Media", 3: "Alta"}
+                actividad = actividad_map.get(actividad_num, "Media")
+
+                features = {
+                    "Edad": edad,
+                    "Peso": peso,
+                    "Frecuencia": frecuencia,
+                    "NivelActividad": actividad
+                }
+
+                pred, prob = knn.predict_label(features, threshold)
+
+            except Exception as e:
+                pred = f"Error: {e}"
+                prob = None
+
+    return render_template(
+        'ejercicio_knn.html',
+        metrics=metrics,
+        pred=pred,
+        prob=prob
+    )
 
 
 if __name__ == '__main__':

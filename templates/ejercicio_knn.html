@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}Caso práctico K-NN{% endblock %}
+{% block content %}
+<div class="container mt-4">
+
+  <h2 class="mb-3">Clasificación con K-Nearest Neighbors (K-NN)</h2>
+  <p>
+    Este caso práctico recomienda un tipo de rutina fitness (<strong>Cardio</strong>, 
+    <strong>Fuerza</strong> o <strong>Mixta</strong>) para nuevos usuarios.  
+    <br>Variables usadas:
+  </p>
+  <ul>
+    <li><strong>Edad</strong> (numérica)</li>
+    <li><strong>Peso</strong> (numérica)</li>
+    <li><strong>Frecuencia cardíaca en reposo</strong> (numérica)</li>
+    <li><strong>Nivel de actividad física</strong> (categórica: 1, 2, 3)</li>
+  </ul>
+  <p>Clase positiva: <strong>Tipo de rutina sugerida</strong>.</p>
+
+  <!-- Entrenamiento -->
+  <hr>
+  <h4>Entrenamiento del modelo</h4>
+  <form method="POST">
+    <button class="btn btn-primary" name="train" value="1">Entrenar Modelo</button>
+  </form>
+
+  {% if metrics %}
+    <div class="mt-4">
+      <h5>Exactitud:</h5>
+      <div class="card p-3 mb-3">
+        <span style="font-size:1.5rem; font-weight:bold;">{{ metrics.accuracy }}</span>
+      </div>
+
+      <h5>Reporte de clasificación:</h5>
+      <table class="table table-bordered table-sm mt-2">
+        <thead>
+          <tr>
+            <th>Clase</th>
+            <th>Precisión</th>
+            <th>Recall</th>
+            <th>F1-score</th>
+            <th>Soporte</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for clase, datos in metrics.report.items() if clase in metrics.classes %}
+          <tr>
+            <td>{{ clase }}</td>
+            <td>{{ "%.2f"|format(datos.precision) }}</td>
+            <td>{{ "%.2f"|format(datos.recall) }}</td>
+            <td>{{ "%.2f"|format(datos['f1-score']) }}</td>
+            <td>{{ datos.support }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <h5>Matriz de confusión:</h5>
+      <img src="{{ url_for('static', filename='cm_knn.png') }}" class="img-fluid mt-2" alt="Matriz de confusión">
+    </div>
+  {% endif %}
+
+  <!-- Predicción -->
+  <hr>
+  <h4>Formulario de predicción</h4>
+  <form method="POST">
+    <input type="hidden" name="predict" value="1">
+
+    <div class="row mb-3">
+      <div class="col">
+        <label>Edad</label>
+        <input type="number" class="form-control" name="edad" step="1" required>
+      </div>
+      <div class="col">
+        <label>Peso</label>
+        <input type="number" class="form-control" name="peso" step="0.1" required>
+      </div>
+      <div class="col">
+        <label>Frecuencia cardíaca reposo</label>
+        <input type="number" class="form-control" name="frecuencia" step="1" required>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label>Nivel de actividad física</label>
+      <select class="form-select" name="actividad" required>
+        <option value="1">1 - Baja</option>
+        <option value="2">2 - Moderada</option>
+        <option value="3">3 - Alta</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label>Threshold (umbral de decisión)</label>
+      <input type="number" class="form-control" name="threshold" step="0.01" value="0.5">
+    </div>
+
+    <button type="submit" class="btn btn-success">Predecir</button>
+  </form>
+
+  {% if pred %}
+    <div class="mt-4">
+      <h4>Predicción: <span class="text-primary">{{ pred }}</span></h4>
+      <p>Probabilidad asociada: <strong>{{ prob }}</strong></p>
+      <p class="text-muted">
+        Con threshold={{ request.form.threshold or 0.5 }}, una menor barrera podría 
+        aumentar la sensibilidad para detectar clases minoritarias.
+      </p>
+    </div>
+  {% endif %}
+
+</div>
+{% endblock %}
