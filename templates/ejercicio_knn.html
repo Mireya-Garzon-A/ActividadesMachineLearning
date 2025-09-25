@@ -70,15 +70,15 @@
     <div class="row mb-3">
       <div class="col">
         <label>Edad</label>
-        <input type="number" class="form-control" name="edad" step="1" required>
+        <input type="number" class="form-control" name="edad" step="1" min="0" required>
       </div>
       <div class="col">
         <label>Peso</label>
-        <input type="number" class="form-control" name="peso" step="0.1" required>
+        <input type="number" class="form-control" name="peso" step="0.1" min="0" required>
       </div>
       <div class="col">
         <label>Frecuencia cardíaca reposo</label>
-        <input type="number" class="form-control" name="frecuencia" step="1" required>
+        <input type="number" class="form-control" name="frecuencia" step="1" min="0" required>
       </div>
     </div>
 
@@ -109,11 +109,7 @@
       </p>
     </div>
   {% endif %}
-  <div class="text-center mt-4">
-  <a href="{{ url_for('inicio') }}" class="btn btn-success px-4 py-2">
-    ← Volver al inicio
-  </a>
-    </div>
+  
 
 
 </div>
