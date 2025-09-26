@@ -3,49 +3,117 @@
 {% block title %}Tipos de Algoritmos de Clasificación{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="container my-5">
 
     <!-- Encabezado -->
     <div class="text-center mb-5">
-        <h1 class="border bg-success bg-opacity-25 text-dark p-4 rounded shadow-sm">
-            <i class="bi bi-diagram-3"></i> Tipos de Algoritmos de Clasificación
+        <h1 class="text-white p-4 rounded-4 shadow-lg animate__animated animate__fadeInDown header-title">
+            <i class="bi bi-diagram-3"></i> Algoritmos de Clasificación
         </h1>
-        <p class="lead mt-3" style="text-align: justify;">
-            Los <strong>algoritmos de clasificación</strong> son técnicas de aprendizaje supervisado que asignan 
-            etiquetas o categorías a nuevos datos según patrones aprendidos a partir de datos previamente etiquetados.  
+        <p class="lead mt-4 px-4 animate__animated animate__fadeInUp text-justify text-muted">
+            Son técnicas de <strong>aprendizaje supervisado</strong> que asignan etiquetas o categorías a nuevos datos 
+            según patrones aprendidos a partir de datos previamente etiquetados.  
             Entre los más usados se encuentran la <strong>Regresión Logística</strong>, 
-            <strong>K-Nearest Neighbors (K-NN)</strong>, Máquinas de Vectores de Soporte (SVM) y Redes Neuronales Artificiales.
+            <strong>K-Nearest Neighbors (K-NN)</strong>, <strong>Máquinas de Vectores de Soporte (SVM)</strong> y 
+            <strong>Redes Neuronales Artificiales</strong>.
         </p>
     </div>
 
     <!-- Mapa conceptual -->
-    <div class="card mb-5 shadow-sm rounded-4 border-0">
-        <div class="card-header bg-primary bg-opacity-25 text-dark text-center rounded-top-4">
-            <h3 class="mb-0"><i class="bi bi-map"></i> Mapa Conceptual</h3>
+    <div class="card shadow-lg border-0 rounded-4 mb-5 animate__animated animate__fadeIn map-card">
+        <div class="card-header text-center rounded-top-4 bg-gradient-primary">
+            <h3 class="mb-0 text-dark fw-bold"><i class="bi bi-diagram-2"></i> Mapa Conceptual</h3>
         </div>
-        <div class="card-body bg-light text-center">
-            <p class="text-muted mb-4">Relación entre diferentes algoritmos de clasificación supervisada:</p>
-            <!-- Sustituye la ruta de la imagen por una que tengas en tu carpeta static/images -->
-            
+        <div class="card-body bg-white rounded-bottom-4 p-3">
+            <div class="ratio ratio-16x9">
+                <iframe 
+                    src="https://www.mindmeister.com/maps/public_map_shell/3825525645/algoritmos-de-clasificaci-n?width=1000&height=700&z=auto&no_share=1&no_logo=1"
+                    class="shadow-sm rounded-3"
+                    allowfullscreen>
+                </iframe>
+            </div>
         </div>
     </div>
 
     <!-- Referencias -->
-    <div class="card shadow-sm rounded-4 border-0">
-        <div class="card-header bg-warning bg-opacity-25 text-dark text-center rounded-top-4">
-            <h3 class="mb-0"><i class="bi bi-journal-text"></i> Referencias</h3>
+    <div class="card shadow-lg rounded-4 border-0 animate__animated animate__fadeInUp ref-card">
+        <div class="card-header bg-gradient-warning text-dark text-center rounded-top-4">
+            <h3 class="mb-0 fw-bold"><i class="bi bi-journal-text"></i> Referencias</h3>
         </div>
         <div class="card-body bg-light">
-            
+            <ul class="list-unstyled px-3 mb-0">
+                <li class="mb-2"><i class="bi bi-bookmark-fill text-primary"></i> CEUPE (European Business, octubre 2023)</li>
+                <li class="mb-2"><i class="bi bi-bookmark-fill text-primary"></i> DataScientest (Febrero 2025). <em>Algoritmos de Clasificación</em>. Springer.</li>
+                <li class="mb-2"><i class="bi bi-bookmark-fill text-primary"></i> 
+                    <a href="https://www.ceupe.mx/blog/cuales-son-los-algoritmos-de-clasificacion.html" target="_blank" class="text-decoration-none link-ref">Artículo en CEUPE</a>
+                </li>
+                <li><i class="bi bi-bookmark-fill text-primary"></i> 
+                    <a href="https://datascientest.com/es/algoritmo-de-clasificacion" target="_blank" class="text-decoration-none link-ref">Artículo en DataScientest</a>
+                </li>
+            </ul>
         </div>
     </div>
 
 </div>
 
+<!-- Estilos extra -->
+<style>
+    /* Encabezado con gradiente */
+    .header-title {
+        background: linear-gradient(90deg, #007bff, #00c9a7);
+        font-size: 2.3rem;
+        letter-spacing: 1px;
+    }
 
+    /* Gradiente del header del mapa */
+    .bg-gradient-primary {
+        background: linear-gradient(90deg, rgba(0,123,255,0.2) 0%, rgba(0,123,255,0.35) 100%);
+    }
 
+    /* Gradiente del header de referencias */
+    .bg-gradient-warning {
+        background: linear-gradient(90deg, rgba(255,193,7,0.3) 0%, rgba(255,193,7,0.45) 100%);
+    }
 
-<!-- Bootstrap Icons -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    /* Tarjetas con hover */
+    .map-card, .ref-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .map-card:hover, .ref-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
 
+    /* Texto justificado */
+    .text-justify {
+        text-align: justify;
+    }
+
+    /* Estética de títulos */
+    h1, h3 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: 700;
+    }
+
+    /* Estilo del iframe */
+    iframe {
+        transition: transform 0.3s ease;
+    }
+    iframe:hover {
+        transform: scale(1.02);
+    }
+
+    /* Links de referencias */
+    .link-ref {
+        color: #0d6efd;
+        transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+    .link-ref:hover {
+        color: #0056b3;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+</style>
+
+<!-- Librería para animaciones -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 {% endblock %}
