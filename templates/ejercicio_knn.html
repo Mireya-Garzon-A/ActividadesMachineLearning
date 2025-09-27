@@ -61,6 +61,135 @@
     </div>
   {% endif %}
 
+  <!-- ANÁLISIS Y CONCLUSIONES ESPECÍFICAS -->
+  {% if conclusiones %}
+  <div class="mt-5">
+    <h4 class="text-primary">📋 CONCLUSIONES ESPECÍFICAS SOLICITADAS</h4>
+    
+    <!-- Resumen Ejecutivo -->
+    <div class="card mt-3">
+        <div class="card-header bg-dark text-white">
+            <h5>🎯 Resumen Ejecutivo</h5>
+        </div>
+        <div class="card-body">
+            <ul class="list-unstyled">
+                {% for punto in conclusiones.resumen_final %}
+                <li>• {{ punto }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- 1. Comparativa de Algoritmos -->
+    <div class="card mt-3">
+        <div class="card-header bg-primary text-white">
+            <h5>1. ¿Qué algoritmos rindieron mejor/peor y por qué?</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-sm table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Algoritmo</th>
+                        <th>Accuracy</th>
+                        <th>Rendimiento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for algo, score in conclusiones.comparativa_algoritmos.resultados.items() %}
+                    <tr class="{% if algo == conclusiones.comparativa_algoritmos.mejor_algoritmo %}table-success{% elif algo == conclusiones.comparativa_algoritmos.peor_algoritmo %}table-warning{% endif %}">
+                        <td>{{ algo }}</td>
+                        <td><strong>{{ score }}</strong></td>
+                        <td>
+                            {% if algo == conclusiones.comparativa_algoritmos.mejor_algoritmo %}
+                            <span class="badge bg-success">MEJOR</span>
+                            {% elif algo == conclusiones.comparativa_algoritmos.peor_algoritmo %}
+                            <span class="badge bg-warning">PEOR</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <h6>Análisis de rendimiento:</h6>
+            <ul>
+                {% for punto in conclusiones.comparativa_algoritmos.analisis %}
+                <li>{{ punto }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- 2. Análisis de características del problema -->
+    <div class="card mt-3">
+        <div class="card-header bg-info text-white">
+            <h5>2. Análisis de características (no linealidad, ruido, dimensionalidad, tamaño de muestra)</h5>
+        </div>
+        <div class="card-body">
+            <ul>
+                {% for punto in conclusiones.analisis_problema %}
+                <li>{{ punto }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- 3. Impacto del umbral y desbalance -->
+    <div class="card mt-3">
+        <div class="card-header bg-warning text-dark">
+            <h5>3. Impacto del umbral y del desbalance</h5>
+        </div>
+        <div class="card-body">
+            <p><strong>Balance de clases:</strong> {{ conclusiones.impacto_umbral_desbalance.balance }}</p>
+            <p><strong>Ratio de balance:</strong> {{ conclusiones.impacto_umbral_desbalance.ratio_balance }}</p>
+            
+            <h6>Distribución de clases:</h6>
+            <ul>
+                {% for clase, count in conclusiones.impacto_umbral_desbalance.distribucion.items() %}
+                <li>{{ clase }}: {{ count }} instancias</li>
+                {% endfor %}
+            </ul>
+            
+            {% if conclusiones.impacto_umbral_desbalance.impacto_umbral %}
+            <h6>Impacto del umbral de decisión:</h6>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Umbral</th>
+                        <th>Accuracy</th>
+                        <th>Instancias Rechazadas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for umbral, datos in conclusiones.impacto_umbral_desbalance.impacto_umbral.items() %}
+                    <tr>
+                        <td>{{ umbral }}</td>
+                        <td>{{ datos.accuracy }}</td>
+                        <td>{{ datos.porcentaje_rechazadas }}%</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- 4. Ideas de mejora -->
+    <div class="card mt-3">
+        <div class="card-header bg-success text-white">
+            <h5>4. Ideas de mejora (class_weight, más datos, features, calibración)</h5>
+        </div>
+        <div class="card-body">
+            <ul>
+                {% for mejora in conclusiones.mejoras_especificas %}
+                <li>{{ mejora }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+  </div>
+  {% endif %}
+
   <!-- Predicción -->
   <hr>
   <h4>Formulario de predicción</h4>

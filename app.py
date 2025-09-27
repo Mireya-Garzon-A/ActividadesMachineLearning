@@ -4,10 +4,12 @@ import Reg_Logis as ReLogistica
 import Relineal
 import pandas as pd
 import knn
-
+import os
 
 app = Flask(__name__)
 
+# Variable global para almacenar las conclusiones actuales
+conclusiones_actuales = None
 
 @app.route('/')
 def inicio():
@@ -33,7 +35,6 @@ def index3():
 def index4():
     return render_template('index4.html')
 
-
 @app.route('/LR', methods = ["GET", "POST"])
 def LR():
     calculateResult = None
@@ -43,7 +44,6 @@ def LR():
             frecuencia = float(request.form["frecuencia"])
             calculateResult = Relineal.CalculateOxygen(altitud, frecuencia)
             
-            # Pequeña pausa para evitar conflictos
             import time
             time.sleep(0.1)
             
@@ -60,15 +60,12 @@ def LR():
 def conceptos():
     return render_template('conceptos.html')
 
-
 # Regresión Logística
-
 ReLogistica.evaluate()
 
 @app.route('/conceptos_reg_logistica')
 def conceptos_reg_logistica():
     return render_template('conceptos_reg_logistica.html')
-
 
 # Cargar datos desde el archivo CSV
 try:
@@ -80,20 +77,16 @@ except Exception as e:
     print(f"Error al cargar datos: {e}")
     exit(1)
 
-
-
 @app.route('/ejercicio_reg_logistica', methods=['GET', 'POST'])
 def ejercicio_reg_logistica():
     result = None
     if request.method == 'POST':
         try:
-            # Obtener datos del formulario
             edad = float(request.form['edad'])
             tiempo = float(request.form['tiempo'])
-            tipo = request.form['tipo'].lower()  # perro, gato, roedor
+            tipo = request.form['tipo'].lower()
             visitas = float(request.form['visitas'])
 
-            # Crear DataFrame con la fila de entrada
             entrada = pd.DataFrame([{
                 "edad_mascota": edad,
                 "tiempo_adopcion": tiempo,
@@ -101,19 +94,14 @@ def ejercicio_reg_logistica():
                 "tipo_mascota": tipo
             }])
 
-            # Generar variables dummy igual que en entrenamiento
             entrada = pd.get_dummies(entrada, columns=["tipo_mascota"], drop_first=True)
 
-            # Asegurar que tenga las mismas columnas que el modelo
             for col in ReLogistica.x.columns:
                 if col not in entrada.columns:
                     entrada[col] = 0
-            entrada = entrada[ReLogistica.x.columns]  # mismo orden
+            entrada = entrada[ReLogistica.x.columns]
 
-            # Convertir a lista para pasarlo a predict_label
             features = entrada.values[0]
-
-            # Llamar a la función de predicción de Reg_Logis
             etiqueta, probabilidad = ReLogistica.predict_label(features)
 
             result = {
@@ -127,27 +115,46 @@ def ejercicio_reg_logistica():
             result = {"error": f"Error: {str(e)}"}
 
     return render_template('ejercicio_reg_logistica.html', result=result)
+
 #===============   knn   =====================#
 
 @app.route('/TiposAlgoritmos')
 def tipos_algoritmos():
-    """Muestra conceptos de K-NN."""
     return render_template('TiposAlgoritmos.html')
 
 @app.route('/ejercicio_knn', methods=['GET', 'POST'])
 def ejercicio_knn():
+    global conclusiones_actuales
+    
     metrics = None
     pred = None
     prob = None
 
-    # Recuperar valores previos si existen
     if request.method == 'POST':
         if 'train' in request.form:
             try:
-                metrics = knn.entrenar_modelo()
-                # Mantener predicción previa si existe en el formulario
+                # Verificar si el archivo de datos existe y tiene contenido nuevo
+                datos_nuevos = verificar_datos_nuevos()
+                
+                # Entrenar modelo y obtener resultados completos
+                resultado_completo = knn.entrenar_modelo()
+                
+                metrics = {
+                    "accuracy": resultado_completo["accuracy"],
+                    "report": resultado_completo["report"],
+                    "classes": resultado_completo["classes"]
+                }
+                
+                # Guardar conclusiones globalmente
+                conclusiones_actuales = resultado_completo["conclusiones"]
+                
+                # Guardar timestamp del entrenamiento
+                with open("static/ultimo_entrenamiento.txt", "w") as f:
+                    f.write(str(pd.Timestamp.now()))
+                
                 pred = request.form.get('pred')
                 prob = request.form.get('prob')
+                
             except Exception as e:
                 metrics = {'error': f'Error entrenando: {e}'}
 
@@ -174,15 +181,43 @@ def ejercicio_knn():
             except Exception as e:
                 pred = f"Error: {e}"
                 prob = None
+    else:
+        # En GET, intentar cargar conclusiones existentes
+        if conclusiones_actuales is None and os.path.exists("static/knn_model.pkl"):
+            try:
+                # Generar conclusiones a partir del modelo existente
+                conclusiones_actuales = knn.generar_conclusiones_desde_modelo_existente()
+            except:
+                conclusiones_actuales = None
 
     return render_template(
         'ejercicio_knn.html',
         metrics=metrics,
         pred=pred,
-        prob=prob
+        prob=prob,
+        conclusiones=conclusiones_actuales
     )
 
+def verificar_datos_nuevos():
+    """Verifica si los datos han cambiado desde el último entrenamiento"""
+    archivo_datos = "DataSheet/Knn_data.csv"
+    archivo_entrenamiento = "static/ultimo_entrenamiento.txt"
+    
+    if not os.path.exists(archivo_entrenamiento):
+        return True
+    
+    if not os.path.exists(archivo_datos):
+        return False
+    
+    try:
+        # Comparar timestamps
+        mod_time_datos = os.path.getmtime(archivo_datos)
+        with open(archivo_entrenamiento, "r") as f:
+            ultimo_entrenamiento = pd.Timestamp(f.read().strip())
+        
+        return mod_time_datos > ultimo_entrenamiento.timestamp()
+    except:
+        return True
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)  # Especifica el puerto
-
+    app.run(debug=True, port=5000)
