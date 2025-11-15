@@ -219,5 +219,9 @@ def verificar_datos_nuevos():
     except:
         return True
 
+@app.route('/rl_conceptos')
+def rl_conceptos():
+    return render_template('rl_conceptos.html')
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
