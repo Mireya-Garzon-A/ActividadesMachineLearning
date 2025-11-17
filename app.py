@@ -223,5 +223,9 @@ def verificar_datos_nuevos():
 def rl_conceptos():
     return render_template('rl_conceptos.html')
 
+@app.route('/rl_ejercicio')
+def rl_ejercicio():
+    return render_template('rl_ejercicio.html')
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

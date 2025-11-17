@@ -1,20 +1,277 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block title %}Aprendizaje por Refuerzo — Conceptos{% endblock %} {% block content %}
+<style>
+  /* Mejora visual local - no altera contenido */
+  .rl-hero{
+    background: linear-gradient(135deg,#0d6efd 0%, #6f42c1 100%);
+    color:#fff;
+    padding:1.6rem;
+    border-radius:0.6rem;
+    margin-bottom:1.2rem;
+    box-shadow:0 6px 18px rgba(16,24,40,0.08);
+  }
+  .rl-container{max-width:1100px;margin:0 auto}
+  .rl-card{border-radius:.5rem;box-shadow:0 6px 18px rgba(16,24,40,0.04);margin-bottom:1rem}
+  .rl-section-title{color:#6f42c1;font-weight:600;margin-top:.5rem}
+  .rl-small{color:#6c757d}
+  .rl-list strong{color:#0d6efd}
+  .rl-accent-btn{background:linear-gradient(90deg,#0d6efd,#6f42c1);color:#fff;border:none}
+  .bibliography p{margin-bottom:.4rem}
+  /* Collapse/accordion tweaks */
+  .accordion-button:not(.collapsed){background:linear-gradient(90deg,#e9eefc,#f4eefe);color:#0d6efd}
+  pre{white-space:pre-wrap}
 
-{% block title %}Aprendizaje por Refuerzo — Conceptos{% endblock %}
+  @media (max-width:767px){
+    .rl-hero{padding:1rem}
+  }
+</style>
 
-{% block content %}
-<div class="card">
+<div class="rl-container">
+  <div class="rl-hero">
+    <h1 class="h3">Aprendizaje por Refuerzo — Conceptos</h1>
+  </div>
+
+  <div class="card rl-card p-3">
     <div class="card-body">
-        <h2>Aprendizaje por Refuerzo — Conceptos</h2>
-        <p>Breve introducción al Aprendizaje por Refuerzo (AR): agentes, entorno, recompensas, política y función de valor.</p>
-        <ul>
-            <li><strong>Agente:</strong> toma decisiones.</li>
-            <li><strong>Entorno:</strong> con el que interactúa el agente.</li>
-            <li><strong>Recompensa:</strong> señal que guía el aprendizaje.</li>
-            <li><strong>Política:</strong> estrategia del agente.</li>
-            <li><strong>Funciones de valor:</strong> estiman la bondad de estados/acciones.</li>
-        </ul>
-        <a href="/rl_ejercicio" class="btn btn-success">Ir al ejercicio práctico</a>
+        <h3 class="h3">Introducción</h3>
+      <p>
+        El aprendizaje por refuerzo (RL) es una técnica de machine learning (ML)
+        que entrena al software para que tome decisiones y logre los mejores
+        resultados. Imita el proceso de aprendizaje por ensayo y error que los
+        humanos utilizan para lograr sus objetivos. Las acciones de software que
+        trabajan para alcanzar su objetivo se refuerzan, mientras que las que se
+        apartan del objetivo se ignoran.
+      </p>
+      <p>
+        Los algoritmos de RL utilizan un paradigma de recompensa y castigo al
+        procesar los datos. Aprenden de los comentarios de cada acción y descubren
+        por sí mismos las mejores rutas de procesamiento para lograr los
+        resultados finales. Los algoritmos también son capaces de funcionar con
+        gratificación aplazada. La mejor estrategia general puede requerir
+        sacrificios a corto plazo, por lo que el mejor enfoque descubierto puede
+        incluir algunos castigos o dar marcha atrás en el camino. El RL es un
+        potente método que ayuda a los sistemas de inteligencia artificial (IA) a
+        lograr resultados óptimos en entornos invisibles.
+      </p>
+
+      <h3 class="rl-section-title">El Aprendizaje por Refuerzo (AR) tiene cinco componentes principales:</h3>
+
+      <div class="accordion" id="rlAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingAgent">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAgent" aria-expanded="false" aria-controls="collapseAgent">
+              1) Agente
+            </button>
+          </h2>
+          <div id="collapseAgent" class="accordion-collapse collapse" aria-labelledby="headingAgent" data-bs-parent="#rlAccordion">
+            <div class="accordion-body">
+              <p>
+                Un agente es un sistema o programa inteligente que interactúa con un
+                entorno para aprender a alcanzar un objetivo determinado. El agente
+                aprende recibiendo retroalimentación del entorno en forma de
+                recompensas o castigos por sus acciones. El objetivo final del agente
+                es aprender una política, que consiste en relacionar los estados del
+                entorno con las acciones, para maximizar su recompensa esperada a
+                largo plazo.
+              </p>
+              <p>
+                Los agentes de aprendizaje por refuerzo se pueden clasificar en tres
+                tipos principales: agentes basados ​​en valores, agentes basados ​​en
+                políticas y agentes basados ​​en modelos. Cada uno tiene estrategias y
+                aplicaciones diferentes, determinadas principalmente por sus
+                paradigmas de aprendizaje.
+              </p>
+
+              <p><strong>- Agentes basados ​​en el valor :</strong> Los agentes basados
+              ​​en el valor aprenden a estimar el valor de realizar acciones
+              específicas en determinadas situaciones. Optimizan sus políticas
+              seleccionando las acciones que maximizan las recompensas futuras
+              esperadas. Técnicas como el aprendizaje Que son ejemplos destacados de
+              enfoques basados ​​en el valor. Estos agentes mantienen una función de
+              valor que representa la recompensa esperada para cada par estado-acción.
+              Al actualizar continuamente esta función, aprenden eficazmente la
+              política óptima a adoptar. Una de las características clave de los
+              agentes basados ​​en valor es su uso de la ecuación de Bellman, que
+              proporciona una relación recursiva para calcular el valor de los estados
+              a partir de las recompensas inmediatas y los valores de los estados
+              subsiguientes. Este principio fundamental permite que estos agentes
+              converjan hacia políticas óptimas con el tiempo, lo que los hace
+              especialmente eficaces en entornos donde los espacios de estados y
+              acciones son manejables.</p>
+
+              <p><strong>- Agentes basados ​​en políticas :</strong> A diferencia de los
+              agentes basados ​​en valores, los agentes basados ​​en políticas
+              parametrizan sus políticas directamente y las optimizan mediante ascenso
+              de gradiente. Estos agentes resultan especialmente útiles en entornos
+              con espacios de acción de alta dimensionalidad, donde el aprendizaje a
+              través de valores de acción puede ser ineficiente. Los gradientes de
+              política desempeñan un papel crucial al permitir que estos agentes
+              aprendan directamente la mejor acción, centrándose en maximizar las
+              recompensas esperadas en lugar de aprender una función de valor. En
+              consecuencia, los métodos basados ​​en políticas suelen ofrecer un mejor
+              rendimiento en ciertos escenarios complejos. Además, los agentes basados
+              ​​en políticas pueden manejar políticas estocásticas, lo que les permite
+              explorar una gama más amplia de acciones y adaptarse con mayor fluidez a
+              entornos cambiantes. Esta adaptabilidad los hace idóneos para
+              aplicaciones en robótica y videojuegos, donde la capacidad de
+              desenvolverse en condiciones inciertas es fundamental.</p>
+
+              <p><strong>- Agentes basados ​​en modelos :</strong>
+              Los agentes basados ​​en modelos se diferencian de los dos tipos
+              anteriores en que construyen un modelo del entorno. Al simular la
+              dinámica del entorno, estos agentes pueden generar posibles secuencias
+              de acciones y resultados con antelación, lo que permite una toma de
+              decisiones más estratégica. Este enfoque puede mejorar
+              significativamente la planificación y conducir a un aprendizaje más
+              eficiente. Sin embargo, construir un modelo preciso puede ser un reto,
+              especialmente en entornos complejos con muchas variables. Estos agentes
+              suelen emplear técnicas como la búsqueda en árbol de Monte Carlo (MCTS)
+              para evaluar posibles estados futuros y tomar decisiones informadas
+              basadas en resultados simulados. Además, la capacidad de incorporar
+              conocimiento previo sobre el entorno puede mejorar aún más su
+              rendimiento, permitiéndoles realizar predicciones que reducen la
+              exploración necesaria para encontrar políticas óptimas. Esto hace que
+              los agentes basados ​​en modelos sean particularmente valiosos en
+              ámbitos como la conducción autónoma y las estrategias de juegos
+              complejos, donde comprender la dinámica del entorno es crucial para el
+              éxito.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingEnv">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEnv" aria-expanded="false" aria-controls="collapseEnv">
+              2) Entorno
+            </button>
+          </h2>
+          <div id="collapseEnv" class="accordion-collapse collapse" aria-labelledby="headingEnv" data-bs-parent="#rlAccordion">
+            <div class="accordion-body">
+              <p> En el aprendizaje por refuerzo, el término «entorno» se refiere al mundo externo 
+                  o al sistema en el que opera un agente. Es el entorno con el que el agente 
+                  interactúa y del que recibe retroalimentación, y su objetivo es aprender de estas 
+                  interacciones y optimizar su comportamiento para lograr un objetivo específico.</p>
+
+              <p> En el aprendizaje por refuerzo, el entorno puede ser desde una simulación virtual 
+                  hasta un sistema físico, como un robot o un videojuego. El entorno proporciona al 
+                  agente un conjunto de observaciones o estados que describen el estado actual del 
+                  sistema. El agente utiliza estas observaciones para tomar decisiones sobre las 
+                  acciones que debe realizar y las acciones que realiza para provocar un cambio en 
+                  el estado del entorno.</p>
+
+              <p> El entorno también proporciona retroalimentación al agente en forma de recompensas 
+                  o penalizaciones, según las acciones que realice. Estas recompensas sirven como 
+                  señales para que el agente refuerce o desaliente ciertos comportamientos, y su 
+                  objetivo es maximizar su recompensa acumulada a lo largo del tiempo.</p>
+
+              <p> El entorno desempeña un papel fundamental en el éxito del aprendizaje por refuerzo,
+                  ya que la capacidad del agente para aprender y optimizar su comportamiento depende 
+                  en gran medida de la calidad del entorno y la retroalimentación que este proporciona. 
+                  Por lo tanto, crear un entorno preciso y eficaz es esencial para desarrollar sistemas 
+                  de aprendizaje por refuerzo exitosos.</p>   
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingReward">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReward" aria-expanded="false" aria-controls="collapseReward">
+              3) Recompensa
+            </button>
+          </h2>
+          <div id="collapseReward" class="accordion-collapse collapse" aria-labelledby="headingReward" data-bs-parent="#rlAccordion">
+            <div class="accordion-body">
+              <p> Una recompensa es una señal de retroalimentación escalar que un agente recibe del entorno 
+                  tras realizar una acción. Su propósito es indicar el grado de éxito del agente en la consecución 
+                  de su objetivo, que normalmente consiste en maximizar una medida acumulativa de recompensa a lo 
+                  largo del tiempo.</p>
+              <p> Las recompensas pueden ser positivas, negativas o nulas, dependiendo de si la acción del 
+                  agente produjo un resultado deseable, indeseable o neutro. El objetivo del agente es 
+                  aprender una estrategia que maximice la suma esperada de recompensas futuras, o el 
+                  rendimiento esperado.</p>
+              <p> El diseño de la función de recompensa es un aspecto crucial del aprendizaje por refuerzo, ya que 
+                  influye directamente en el comportamiento del agente. Una función de recompensa bien diseñada 
+                  debe incentivar al agente a alcanzar el objetivo deseado, evitando comportamientos no deseados. 
+                  Sin embargo, diseñar funciones de recompensa que reflejen con precisión el comportamiento deseado 
+                  puede resultar complejo, y las funciones de recompensa inadecuadas pueden conducir a un comportamiento
+                  subóptimo o incluso indeseable.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingPolicy">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePolicy" aria-expanded="false" aria-controls="collapsePolicy">
+              4) Política
+            </button>
+          </h2>
+          <div id="collapsePolicy" class="accordion-collapse collapse" aria-labelledby="headingPolicy" data-bs-parent="#rlAccordion">
+            <div class="accordion-body">
+              <p> Una política es una función que asocia el estado actual de un agente con una acción a realizar en 
+                  dicho estado. La política define el comportamiento o la estrategia del agente para elegir acciones 
+                  en el entorno.</p>
+              <p> Puede ser determinista, lo que significa que siempre elige la misma acción para un estado dado, o 
+                  estocástica, lo que significa que elige las acciones de forma probabilística. En una política 
+                  estocástica, las probabilidades de tomar cada acción en un estado dado vienen especificadas por la 
+                  política.</p>
+              <p> El objetivo del aprendizaje por refuerzo suele ser aprender una política óptima que maximice la recompensa 
+                  acumulada esperada a lo largo del tiempo. Esto se logra normalmente mediante ensayo y error, donde el 
+                  agente interactúa con el entorno, observa las recompensas resultantes y las transiciones a nuevos 
+                  estados, y actualiza su política en función de los resultados observados.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingValue">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseValue" aria-expanded="false" aria-controls="collapseValue">
+              5) Funciones de valor
+            </button>
+          </h2>
+          <div id="collapseValue" class="accordion-collapse collapse" aria-labelledby="headingValue" data-bs-parent="#rlAccordion">
+            <div class="accordion-body">
+              <p> Una función de valor estima el valor de un estado o de un par estado-acción. Representa la eficacia 
+                  de un estado o acción para alcanzar el objetivo del agente. La función de valor es un componente 
+                  fundamental de muchos algoritmos de aprendizaje por refuerzo, ya que guía el proceso de toma de decisiones 
+                  del agente. </p>   
+              <p> En el aprendizaje por refuerzo existen dos tipos de funciones de valor: la función de valor de estado y 
+                  la función de valor de acción.</p>
+              <p> <strong>Función de valor de estado:</strong> Predice la recompensa que un agente puede esperar recibir 
+                  en un estado dado. La función de valor de estado se denota por V(s) y se define como la recompensa acumulada 
+                  esperada que un agente puede recibir partiendo de un estado dado s y siguiendo la política actual.</p>
+              <p> <strong>Función de valor de acción:</strong> Predice la recompensa que un agente puede esperar recibir al 
+                  realizar una acción específica en un estado dado. La función de valor de acción se denota como Q(s,a) y se 
+                  define como la recompensa acumulada esperada que un agente puede recibir partiendo del estado s, realizando 
+                  la acción a y siguiendo la política actual.</p>
+              <p> La función de valor se estima utilizando experiencias pasadas y se actualiza mediante métodos de aprendizaje 
+                  iterativos, como el aprendizaje por diferencia temporal o los métodos de Monte Carlo. Una estimación precisa de 
+                  la función de valor es esencial para que el agente tome decisiones óptimas y maximice sus recompensas a largo plazo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card rl-card p-3 mt-3">
+        <div class="card-body">
+          <h4 class="h6">Bibliografía</h4>
+          <div class="bibliography">
+            <p>Amazon Web Services. (s. f.). ¿Qué es el aprendizaje mediante refuerzo? 
+                    Recuperado de https://aws.amazon.com/es/what-is/reinforcement-learning/ </p>
+            <p>Matoffo. (s. f.). Reinforcement learning agents explained. 
+            Recuperado de https://matoffo.com/reinforcement-learning-agents-explained/</p>
+
+            <p>Sarkar, A. (s. f.). Reinforcement learning for beginners: Introduction, concepts, 
+                algorithms, and applications. Medium. Recuperado de 
+                https://arjun-sarkar786.medium.com/reinforcement-learning-for-beginners-introduction-concepts-algorithms-and-applications-3f805cbd7f92</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <a href="/rl_ejercicio" class="btn rl-accent-btn me-2">Ir al ejercicio práctico</a>
+      </div>
+
     </div>
+  </div>
 </div>
+
 {% endblock %}
