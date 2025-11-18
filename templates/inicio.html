@@ -3,86 +3,136 @@
 {% block title %}Inicio{% endblock %}
 
 {% block content %}
+<style>
+  .intro-section {
+    background: linear-gradient(135deg, #e0f7e9, #d0e6ff);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+
+  .intro-section h1 {
+    font-weight: 700;
+    font-size: 2rem;
+  }
+
+  .intro-section p {
+    font-size: 1.1rem;
+    color: #333;
+  }
+
+  .ml-card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease;
+  }
+
+  .ml-card:hover {
+    transform: scale(1.01);
+  }
+
+  .ml-card .card-header {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .ml-card .card-body {
+    font-size: 1rem;
+    color: #444;
+  }
+
+  .bi {
+    margin-right: 8px;
+  }
+</style>
+
 <div class="container mt-5">
 
-    <!-- Título principal -->
-    <div class="text-center mb-5">
-        <h1 class="border bg-success bg-opacity-25 text-dark p-4 rounded shadow-sm">
-            <i class="bi bi-robot"></i> <strong>Aplicación de Machine Learning Supervisado</strong>
-        </h1>
-        <p class="lead mt-3" style="text-align: justify;">
-            El <strong>Machine Learning supervisado</strong> es una técnica que entrena modelos a partir de 
-            datos <strong>etiquetados</strong> para predecir o clasificar resultados futuros basándose en patrones aprendidos. 
+  <!-- Introducción -->
+<section class="py-5 px-4 px-md-5 text-white rounded-4 shadow-lg mb-5"
+  style="background: linear-gradient(90deg, #09326e, #280d5b);">
+  <div class="container">
+    <div class="row justify-content-center text-center g-4">
+      <div class="col-md-10">
+
+        <h2 class="fw-bold mb-3 text-white" 
+            style="font-size: 2.2rem; letter-spacing: .5px;">
+          <i class="bi bi-award-fill me-2"></i>
+          Aplicación de Machine Learning Supervisado
+        </h2>
+
+        <p class="lead mb-0 text-light" style="text-align: justify;">
+          El <strong>Machine Learning supervisado</strong> entrena modelos a partir de datos 
+          <strong>etiquetados</strong> para predecir o clasificar resultados futuros. Esta técnica 
+          permite descubrir patrones útiles en distintos sectores como salud, finanzas, retail y más.
         </p>
-    </div>
 
-    <!-- Tarjeta de Regresión Lineal -->
-    <div class="card mb-4 shadow-sm rounded-4 border-0">
-        <div class="card-header bg-primary bg-opacity-25 text-dark text-center rounded-top-4">
-            <h3 class="mb-0"><i class="bi bi-bar-chart-line-fill"></i> <strong>Regresión Lineal</strong></h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Tarjetas de algoritmos -->
+  <div class="row g-4">
+
+    <!-- Regresión Lineal -->
+    <div class="col-md-6">
+      <div class="card ml-card">
+        <div class="card-header bg-primary bg-opacity-25 text-center rounded-top">
+          <i class="bi bi-bar-chart-line-fill"></i> Regresión Lineal
         </div>
         <div class="card-body bg-light">
-            <p class="mb-0" style="text-align: justify;">
-                La <strong>regresión lineal</strong> es un algoritmo supervisado que modela la relación 
-                entre una variable independiente y una dependiente mediante una línea recta, 
-                permitiendo predecir valores continuos de manera sencilla y eficiente.
-            </p>
+          <p class="text-justify">
+            La <strong>regresión lineal</strong> modela la relación entre variables mediante una línea recta, ideal para predecir valores continuos como precios, temperaturas o niveles de oxígeno.
+          </p>
         </div>
+      </div>
     </div>
 
-    <!-- Tarjeta de Regresión Logística -->
-    <div class="card mb-4 shadow-sm rounded-4 border-0">
-        <div class="card-header bg-success bg-opacity-25 text-dark text-center rounded-top-4">
-            <h3 class="mb-0"><i class="bi bi-arrow-repeat"></i> <strong>Regresión Logística</strong></h3>
+    <!-- Regresión Logística -->
+    <div class="col-md-6">
+      <div class="card ml-card">
+        <div class="card-header bg-success bg-opacity-25 text-center rounded-top">
+          <i class="bi bi-arrow-repeat"></i> Regresión Logística
         </div>
         <div class="card-body bg-light">
-            <p class="mb-0" style="text-align: justify;">
-                La <strong>regresión logística</strong> es un algoritmo usado para clasificar datos en categorías, 
-                estimando probabilidades entre 0 y 1 mediante una función sigmoidea. 
-                Es rápido, sencillo y ampliamente aplicado en detección de fraudes, diagnóstico médico 
-                y análisis de abandono de clientes.
-            </p>
+          <p class="text-justify">
+            La <strong>regresión logística</strong> clasifica datos en categorías usando probabilidades. Es útil en diagnóstico médico, detección de fraudes y predicción de abandono de clientes.
+          </p>
         </div>
+      </div>
     </div>
 
-    <!-- Tarjeta de knn -->
-    <div class="card mb-4 shadow-sm rounded-4 border-0">
-        <div class="card-header bg-info bg-opacity-25 text-dark text-center rounded-top-4">
-            <h3 class="mb-0"><i class="bi bi-diagram-3"></i> <strong> K-Nearest Neighbors (K-NN)</strong></h3>
+    <!-- K-NN -->
+    <div class="col-md-6">
+      <div class="card ml-card">
+        <div class="card-header bg-info bg-opacity-25 text-center rounded-top">
+          <i class="bi bi-diagram-3"></i> K-Nearest Neighbors (K-NN)
         </div>
         <div class="card-body bg-light">
-            <p class="mb-0" style="text-align: justify;">
-                El algoritmo <strong>K-Nearest Neighbors</strong> clasifica nuevas observaciones en función de las clases 
-                de sus vecinos más cercanos en el espacio de características.  
-                Es intuitivo, no paramétrico y funciona bien en problemas de clasificación 
-                donde la relación entre variables no es lineal.  
-                <br><br>
-              <!--  <a href="/ejercicio_knn" class="btn btn-warning btn-sm mt-2">
-                    <i class="bi bi-pencil-square"></i> Ir al ejercicio práctico 
-                </a>-->
-            </p>
+          <p class="text-justify">
+            El algoritmo <strong>K-NN</strong> clasifica observaciones según sus vecinos más cercanos. Es intuitivo y eficaz en problemas donde la relación entre variables no es lineal.
+          </p>
         </div>
+      </div>
     </div>
 
-    <!-- Tarjeta de Aprendizaje por Refuerzo -->
-    <div class="card mb-4 shadow-sm rounded-4 border-0">
-        <div class="card-header bg-warning bg-opacity-25 text-dark text-center rounded-top-4">
-            <h3 class="mb-0"><i class="bi bi-trophy"></i> <strong>Aprendizaje por Refuerzo</strong></h3>
+    <!-- Aprendizaje por Refuerzo -->
+    <div class="col-md-6">
+      <div class="card ml-card">
+        <div class="card-header bg-warning bg-opacity-25 text-center rounded-top">
+          <i class="bi bi-trophy"></i> Aprendizaje por Refuerzo
         </div>
         <div class="card-body bg-light">
-            <p class="mb-0" style="text-align: justify;">
-                El <strong>aprendizaje por refuerzo</strong> es un paradigma donde un agente aprende 
-                a tomar decisiones mediante interacciones con un entorno. El agente recibe recompensas 
-                o penalizaciones por sus acciones, ajustando su estrategia para maximizar la recompensa acumulada. 
-                A diferencia del aprendizaje supervisado, no requiere datos etiquetados, sino que aprende 
-                por ensayo y error. Es fundamental en juegos, robótica y sistemas de toma de decisiones.
-            </p>
+          <p class="text-justify">
+            El <strong>aprendizaje por refuerzo</strong> permite que un agente aprenda a tomar decisiones mediante recompensas y penalizaciones. Es clave en robótica, juegos y sistemas autónomos.
+          </p>
         </div>
+      </div>
     </div>
 
+  </div>
 </div>
-
-<!-- Bootstrap Icons -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-
 {% endblock %}

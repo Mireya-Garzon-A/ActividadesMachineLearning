@@ -1,10 +1,14 @@
 from flask import Flask
-from flask import render_template, request
+from flask import render_template, request, jsonify
+from agente import QLearning
+from entorno import GridWorld
 import Reg_Logis as ReLogistica
 import Relineal
 import pandas as pd
 import knn
 import os
+import matplotlib.pyplot as plt
+
 
 app = Flask(__name__)
 
@@ -35,7 +39,10 @@ def index3():
 def index4():
     return render_template('index4.html')
 
-@app.route('/LR', methods = ["GET", "POST"])
+
+# ======================== REGRESIÓN LINEAL ============================
+
+@app.route('/LR', methods=["GET", "POST"])
 def LR():
     calculateResult = None
     if request.method == "POST":
@@ -54,28 +61,27 @@ def LR():
         except Exception as e:
             return f"Error: {str(e)}"
     
-    return render_template("rl.html", result = calculateResult)
+    return render_template("rl.html", result=calculateResult)
+
+
+# =================== REGRESIÓN LOGÍSTICA ========================
 
 @app.route('/conceptos')
 def conceptos():
     return render_template('conceptos.html')
 
-# Regresión Logística
+# Ejecutar evaluación una vez
 ReLogistica.evaluate()
 
 @app.route('/conceptos_reg_logistica')
 def conceptos_reg_logistica():
     return render_template('conceptos_reg_logistica.html')
 
-# Cargar datos desde el archivo CSV
+# Cargar datos CSV
 try:
     data = pd.read_csv('./DataSheet/data.csv', delimiter=';')
-except FileNotFoundError:
-    print("Error: El archivo data.csv no se encontró.")
-    exit(1)
-except Exception as e:
-    print(f"Error al cargar datos: {e}")
-    exit(1)
+except:
+    data = None
 
 @app.route('/ejercicio_reg_logistica', methods=['GET', 'POST'])
 def ejercicio_reg_logistica():
@@ -116,7 +122,8 @@ def ejercicio_reg_logistica():
 
     return render_template('ejercicio_reg_logistica.html', result=result)
 
-#===============   knn   =====================#
+
+# ========================== KNN ==============================
 
 @app.route('/TiposAlgoritmos')
 def tipos_algoritmos():
@@ -133,10 +140,6 @@ def ejercicio_knn():
     if request.method == 'POST':
         if 'train' in request.form:
             try:
-                # Verificar si el archivo de datos existe y tiene contenido nuevo
-                datos_nuevos = verificar_datos_nuevos()
-                
-                # Entrenar modelo y obtener resultados completos
                 resultado_completo = knn.entrenar_modelo()
                 
                 metrics = {
@@ -145,15 +148,10 @@ def ejercicio_knn():
                     "classes": resultado_completo["classes"]
                 }
                 
-                # Guardar conclusiones globalmente
                 conclusiones_actuales = resultado_completo["conclusiones"]
-                
-                # Guardar timestamp del entrenamiento
+
                 with open("static/ultimo_entrenamiento.txt", "w") as f:
                     f.write(str(pd.Timestamp.now()))
-                
-                pred = request.form.get('pred')
-                prob = request.form.get('prob')
                 
             except Exception as e:
                 metrics = {'error': f'Error entrenando: {e}'}
@@ -182,10 +180,8 @@ def ejercicio_knn():
                 pred = f"Error: {e}"
                 prob = None
     else:
-        # En GET, intentar cargar conclusiones existentes
         if conclusiones_actuales is None and os.path.exists("static/knn_model.pkl"):
             try:
-                # Generar conclusiones a partir del modelo existente
                 conclusiones_actuales = knn.generar_conclusiones_desde_modelo_existente()
             except:
                 conclusiones_actuales = None
@@ -198,26 +194,8 @@ def ejercicio_knn():
         conclusiones=conclusiones_actuales
     )
 
-def verificar_datos_nuevos():
-    """Verifica si los datos han cambiado desde el último entrenamiento"""
-    archivo_datos = "DataSheet/Knn_data.csv"
-    archivo_entrenamiento = "static/ultimo_entrenamiento.txt"
-    
-    if not os.path.exists(archivo_entrenamiento):
-        return True
-    
-    if not os.path.exists(archivo_datos):
-        return False
-    
-    try:
-        # Comparar timestamps
-        mod_time_datos = os.path.getmtime(archivo_datos)
-        with open(archivo_entrenamiento, "r") as f:
-            ultimo_entrenamiento = pd.Timestamp(f.read().strip())
-        
-        return mod_time_datos > ultimo_entrenamiento.timestamp()
-    except:
-        return True
+
+# ======================= APRENDIZAJE POR REFUERZO ======================
 
 @app.route('/rl_conceptos')
 def rl_conceptos():
@@ -226,6 +204,58 @@ def rl_conceptos():
 @app.route('/rl_ejercicio')
 def rl_ejercicio():
     return render_template('rl_ejercicio.html')
+
+
+# ---- Inicializar RL ----
+env_rl = GridWorld()
+agente_rl = QLearning(env_rl)
+
+
+# ---- Entrenar agente ----
+@app.route('/rl_entrenar', methods=['POST'])
+def rl_entrenar():
+
+    episodios = int(request.form.get("episodios", 300))
+    alpha = float(request.form.get("alpha", 0.1))
+    gamma = float(request.form.get("gamma", 0.95))
+    epsilon = float(request.form.get("epsilon", 1.0))
+
+    global agente_rl
+    agente_rl = QLearning(env_rl, alpha=alpha, gamma=gamma, epsilon=epsilon)
+
+    recompensas = agente_rl.entrenar(episodios)
+    promedio = round(sum(recompensas) / len(recompensas), 4)
+
+    # Graficar recompensas
+    plt.figure(figsize=(6, 4))
+    plt.plot(recompensas)
+    plt.xlabel("Episodio")
+    plt.ylabel("Recompensa")
+    plt.title("Recompensa acumulada por episodio")
+    plt.grid(True)
+    ruta_grafica = "static/recompensas.png"
+    plt.savefig(ruta_grafica)
+    plt.close()
+
+    agente_rl.guardar("modelo.pkl")
+
+    return jsonify({
+        "promedio": promedio,
+        "ruta_grafica": ruta_grafica
+    })
+
+
+# ---- Probar política aprendida ----
+@app.route('/rl_probar')
+def rl_probar():
+    agente_rl.cargar("modelo.pkl")
+    camino = agente_rl.trayectoria()
+    camino_coords = [env_rl.decode(s) for s in camino]
+
+    return jsonify({"camino": camino_coords})
+
+
+# ======================= INICIO SERVIDOR ===========================
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

@@ -1,3 +1,4 @@
+/* ----------------- BASE (tu CSS original) ----------------- */
 html, body {
     margin: 0;
     padding: 0;
@@ -6,14 +7,14 @@ html, body {
 
 body{
     font-family: Arial, sans-serif;
-    background-image: url("/static/images/fondoweb.png");
+    background-image: url("/static/images/fondo1.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center center;
     min-height: 100vh;
     position: relative;
-   
+    color: #212529; /* agregado para consistencia */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -26,5 +27,223 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-block;
     padding: 0.25rem 0.5rem;
     border-radius: 0.375rem; /* igual que Bootstrap rounded */
+}
+
+/* ----------------- VARIABLES Y LAYOUT ----------------- */
+:root{
+  --topbar-height: 56px;
+  --footer-height: 56px;
+  --sidebar-width: 250px;
+}
+
+/* ----------------- TOP BAR (fija arriba) ----------------- */
+.top-bar {
+    background: linear-gradient(90deg, #160960, #090747);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: .4px;
+    padding: 10px 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--topbar-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1100;
+    color: #fff;
+}
+
+/* ----------------- FOOTER (fijo abajo) ----------------- */
+footer.site-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--footer-height);
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 -2px 6px rgba(0,0,0,0.08);
+}
+
+/* ----------------- SIDEBAR ----------------- */
+/* Ubicado debajo del topbar, y altura ajustada para no tapar la topbar */
+#sidebar {
+    width: var(--sidebar-width);
+    background-color: #f8f9fa;
+    position: fixed;
+    top: var(--topbar-height);
+    left: 0;
+    z-index: 1000;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    transform: translateX(-100%); /* oculto por defecto */
+    height: calc(100vh - var(--topbar-height)); /* no tapa el topbar */
+    overflow-y: auto;
+}
+
+#sidebar.show {
+    transform: translateX(0);
+}
+
+/* cabecera del sidebar */
+.sidebar-header {
+    padding: 20px;
+    background-color: #1d848e;
+    color: white;
+    text-align: center;
+    position: sticky;
+    top: 0;
+}
+
+
+
+
+
+/* enlaces del sidebar */
+.sidebar-link {
+    color: #212529;
+    font-weight: 500;
+    padding: 12px 20px;
+    display: block;
+    text-decoration: none;
+    border-left: 4px solid transparent;
+}
+
+.sidebar-link:hover {
+    background-color: #ffffff;
+    color: #157347;
+    border-left: 4px solid #28a745;
+}
+
+/* collapse submenu */
+.submenu .dropdown-item {
+    padding-left: 2.5rem;
+    font-size: 0.95rem;
+    color: #495057;
+}
+.submenu .dropdown-item:hover {
+    background-color: #e9ecef;
+    color: #157347;
+}
+
+/* ----------------- CONTENIDO PRINCIPAL ----------------- */
+/* Se agrega padding top/bottom para no quedar debajo de topbar/footer */
+#content {
+    margin-left: 0; /* cambia a sidebar width cuando esté abierto */
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+    padding-top: calc(var(--topbar-height) + 16px); /* separa del top bar */
+    padding-bottom: calc(var(--footer-height) + 16px); /* separa del footer */
+    min-height: calc(100vh - var(--topbar-height) - var(--footer-height));
+}
+
+/* desplazamiento cuando sidebar abierto */
+#content.shifted {
+    margin-left: var(--sidebar-width);
+}
+
+/* si deseas desplazar el footer cuando el sidebar abre (opcional) */
+footer.shifted {
+    margin-left: var(--sidebar-width);
+}
+
+/* ----------------- BOTÓN TOGGLE ----------------- */
+#sidebarToggleBtn {
+    position: fixed;
+    top: calc(var(--topbar-height) + 12px); /* justo debajo del topbar */
+    left: 0;
+    z-index: 1150;
+    background-color: #00c851;
+    color: white;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    padding: 10px 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 2px 0 6px rgba(0,0,0,0.12);
+    transition: all 0.2s ease;
+}
+#sidebarToggleBtn:hover {
+    background-color: #198754;
+}
+#sidebarToggleBtn i {
+    pointer-events: none;
+}
+
+/* Ajustes para que el #sidebar no aparezca encima del topbar */
+@media (max-width: 991px) {
+    /* En móviles, el sidebar puede cubrir el resto; comportamiento por defecto */
+}
+
+/* ----------------- ADICIONALES (estética) ----------------- */
+#sidebar .list-group {
+  margin-top: 0.5rem;
+  padding-bottom: 1rem;
+}
+
+/* asegurar buena lectura en secciones con background oscuro */
+.section-contrast-text {
+  color: #fff;
+}
+
+/* utilidades pequeñas */
+.text-center-important { text-align: center !important; }
+
+/* ----------------- ESTILOS EJERCICIO RL ----------------- */
+.ex-hero {
+  background: linear-gradient(135deg, #06f 0%, #6f42c1 100%);
+  color: #fff;
+  padding: 1.4rem;
+  border-radius: .6rem .6rem 0 0;
+  margin-bottom: 0;
+}
+
+.ex-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.ex-card {
+  background-color: #fff;
+  border-radius: .6rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 40px);
+  gap: 6px;
+  margin-top: 20px;
+}
+
+.cell {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.start { background-color: #b3d9ff; }
+.goal { background-color: #c6f5c6; }
+.hole { background-color: #f7b3b3; }
+.agent { background-color: #fff2cc; border: 2px solid #fbc02d; }
+
+.btn-primary-gradient {
+  background: linear-gradient(90deg, #0d6efd, #6f42c1);
+  border: none;
+  color: #fff;
+  padding: 6px 12px;
+  margin-right: 10px;
 }
 
