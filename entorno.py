@@ -48,3 +48,11 @@ class GridWorld:
     # Decodifica entero → (fila, columna)
     def decode(self, sid):
         return (sid // self.size, sid % self.size)
+
+    ### <-- AÑADIDO: Método para actualizar el escenario dinámicamente
+    def update_scenario(self, start, goal, holes):
+        """Actualiza las posiciones de inicio, meta y huecos del entorno."""
+        self.start = tuple(start)
+        self.goal = tuple(goal)
+        self.holes = [tuple(h) for h in holes]
+        self.state = self.start # Resetea el estado del agente al nuevo inicio

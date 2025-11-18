@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Ejercicio — Aprendizaje por Refuerzo
+Ejercicio — Aprendizaje por Refuerzo Mejorado
 {% endblock %}
 
 {% block content %}
@@ -10,7 +10,7 @@ Ejercicio — Aprendizaje por Refuerzo
   <!-- Encabezado -->
   <div class="bg-primary border border-2 border-success rounded-4 shadow-sm p-3 mb-4 text-center">
     <h1 class="h4 fw-bold text-white mb-0">
-      <i class="bi bi-controller me-2"></i> Ejercicio práctico — Aprendizaje por Refuerzo
+      <i class="bi bi-controller me-2"></i> Ejercicio práctico — Aprendizaje por Refuerzo Mejorado
     </h1>
   </div>
 
@@ -21,53 +21,85 @@ Ejercicio — Aprendizaje por Refuerzo
         <i class="bi bi-info-circle-fill me-2"></i> ¿Qué hace este ejercicio práctico?
       </h5>
       <p class="lead text-justify mb-0">
-        Este ejercicio de <strong>aprendizaje por refuerzo</strong> permite simular cómo un agente 
+        Este ejercicio de <strong>aprendizaje por refuerzo mejorado</strong> permite simular cómo un agente 
         aprende a tomar decisiones dentro de un entorno de cuadrícula.  
         El agente recibe <em>recompensas</em> o <em>penalizaciones</em> según sus acciones, 
         y con el entrenamiento mejora su política de movimiento para alcanzar la meta evitando obstáculos.  
-        De esta manera, se comprende cómo los algoritmos refuerzan conductas óptimas y se aplican en 
-        áreas como <strong>robótica, juegos y sistemas autónomos</strong>.
+        Esta versión optimizada incluye ajustes en los hiperparámetros, decaimiento de epsilon y una función 
+        de recompensa mejorada que facilita el aprendizaje.
       </p>
     </div>
   </div>
 
   <!-- Tarjeta del ejercicio -->
   <div class="card ex-card">
-  <div class="mt-2 mb-3 text-center">
+  <div class="mt-2 mb-3 text-center position-relative">
+    <div id="loading-spinner" class="spinner-border text-primary position-absolute top-50 start-50 translate-middle" role="status" style="display: none;">
+      <span class="visually-hidden">Procesando...</span>
+    </div>
+    <!-- Botones actualizados -->
     <button class="btn btn-primary-gradient" onclick="entrenar()">Entrenar agente</button>
-    <button class="btn btn-primary-gradient" onclick="probar()">Probar política</button>
-    <button class="btn btn-secondary" onclick="reset()">Reiniciar vista</button>
+    <button class="btn btn-success-gradient" onclick="probar()">Probar y Aprender</button>
+    <button class="btn btn-warning-gradient" onclick="reiniciarAgente()">Reiniciar Agente</button>
+    <button class="btn btn-secondary" onclick="reset()">Nuevo Mapa</button>
+  </div>
+
+  <!-- MODO DE APRENDIZAJE ACTIVO -->
+  <div class="card mb-3 border-warning">
+    <div class="card-header bg-warning text-dark">
+      <h6 class="mb-0 fw-bold"><i class="bi bi-lightbulb-fill me-2"></i>Modo de Aprendizaje Activo</h6>
+    </div>
+    <div class="card-body">
+      <p class="mb-0">
+        <strong>¡El agente ahora aprende de sus errores!</strong> Cada vez que usas <strong>"Probar y Aprender"</strong>, el agente actualiza su estrategia. 
+        Si se queda atascado y no encuentra la solución, usa <strong>"Reiniciar Agente"</strong> para borrar su memoria y forzarlo a buscar una ruta completamente nueva.
+      </p>
+    </div>
   </div>
 
   <!-- Indicadores -->
-<div class="row mb-3">
-  <div class="col-md-4">
-    <p><strong>Recompensa promedio:</strong> <span id="promedio">-</span></p>
-  </div>
-  <div class="col-md-4">
-    <p><strong>Episodios entrenados:</strong> <span id="episodios">-</span></p>
-  </div>
-  <div class="col-md-4">
-    <p><strong>Tasa de exploración (ε):</strong> <span id="epsilon">-</span></p>
-  </div>
-</div>
-
-<!-- Cuadrícula y gráfico alineados -->
-<div class="row">
-  <!-- Cuadrícula -->
-  <div class="col-md-6">
-    <div class="grid" id="grilla"></div>
+  <div class="row mb-3">
+    <div class="col-md-4">
+      <p><strong>Recompensa promedio:</strong> <span id="promedio">-</span></p>
+    </div>
+    <div class="col-md-4">
+      <p><strong>Episodios entrenados:</strong> <span id="episodiosEntrenados">-</span></p>
+    </div>
+    <div class="col-md-4">
+      <p><strong>Tasa de exploración final (ε):</strong> <span id="epsilonFinal">-</span></p>
+    </div>
   </div>
 
-  <!-- Gráfico -->
-  <div class="col-md-6 text-center">
-    <img id="graf-recompensas" src="" class="img-fluid rounded shadow-sm" alt="Evolución de la recompensa">
+  <!-- RESULTADOS DE LA PRUEBA -->
+  <div class="card mb-3 border-info" id="card-resultados" style="display: none;">
+    <div class="card-header bg-info text-white">
+      <h6 class="mb-0 fw-bold"><i class="bi bi-clipboard-check me-2"></i>Resultados de la última prueba</h6>
+    </div>
+    <div class="card-body">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <p class="mb-1"><strong>Estado final:</strong> <span id="estado-prueba" class="fw-bold"></span></p>
+        </div>
+        <div class="col-md-6">
+          <p class="mb-1"><strong>Fallos (huecos tocados):</strong> <span id="fallos" class="fw-bold"></span></p>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 
-  <!-- Cuadrícula -->
-  <div class="grid mt-3" id="grilla"></div>
-</div>
+  <!-- Cuadrícula y gráfico alineados -->
+  <div class="row">
+    <!-- Cuadrícula -->
+    <div class="col-md-6">
+      <div id="status-message" class="text-center mb-2 fw-bold text-info" style="min-height: 24px;"></div>
+      <div class="grid" id="grilla"></div>
+    </div>
+
+    <!-- Gráfico -->
+    <div class="col-md-6 text-center">
+      <img id="graf-recompensas" src="" class="img-fluid rounded shadow-sm" alt="Evolución de la recompensa">
+    </div>
+  </div>
 
     <!-- Tarjetas lineales -->
     <div class="row mt-3">
@@ -77,8 +109,8 @@ Ejercicio — Aprendizaje por Refuerzo
           <div class="card-body">
             <h6 class="fw-bold text-success mb-2">Recompensas y penalizaciones</h6>
             <ul class="mb-0">
-              <li><span class="goal px-2"> </span> Meta → <strong>+1</strong></li>
-              <li><span class="hole px-2"> </span> Hueco → <strong>-1</strong></li>
+              <li><span class="goal px-2"> </span> Meta → <strong>+1.0</strong></li>
+              <li><span class="hole px-2"> </span> Hueco → <strong>-1.0</strong></li>
               <li><span class="cell px-2"> </span> Movimiento normal → <strong>-0.01</strong></li>
               <li><span class="start px-2"> </span> Inicio → <strong>S</strong></li>
             </ul>
@@ -93,7 +125,7 @@ Ejercicio — Aprendizaje por Refuerzo
             <h6 class="fw-bold text-primary mb-2">Recorrido del agente</h6>
             <ul class="mb-0">
               <li><span class="agent px-2"> </span> Celdas visitadas por el agente durante la prueba</li>
-              <li>Se muestran en orden de avance, desde el inicio hasta que alcanza la meta o cae en un hueco</li>
+              <li>La animación se detiene al llegar a la meta o caer en un hueco.</li>
             </ul>
           </div>
         </div>
@@ -105,7 +137,7 @@ Ejercicio — Aprendizaje por Refuerzo
 <!-- Script -->
 <script>
   const width = 5, height = 5;
-  const start = [0, 0], goal = [4, 4], holes = [[1, 3], [3, 1]];
+  let start = [0, 0], goal = [4, 4], holes = [[1, 3], [3, 1]];
 
   function renderGrid(camino = []) {
     const grilla = document.getElementById("grilla");
@@ -120,9 +152,10 @@ Ejercicio — Aprendizaje por Refuerzo
           cell.textContent = "S";
         } else if (r === goal[0] && c === goal[1]) {
           cell.classList.add("goal");
-          cell.textContent = "+1";
+          cell.textContent = "+1.0";
         } else if (holes.some(h => h[0] === r && h[1] === c)) {
           cell.classList.add("hole");
+          cell.textContent = "-1.0";
         }
 
         if (camino.some(([rr, cc]) => rr === r && cc === c)) {
@@ -135,55 +168,147 @@ Ejercicio — Aprendizaje por Refuerzo
   }
 
   function entrenar() {
-  // Si quieres enviar parámetros personalizados al backend
-  const formData = new FormData();
-  formData.append("episodios", 500);   // ejemplo: 500 episodios
-  formData.append("alpha", 0.1);
-  formData.append("gamma", 0.95);
-  formData.append("epsilon", 1.0);
-
-  fetch("/rl_entrenar", { method: "POST", body: formData })
-    .then(r => r.json())
-    .then(data => {
-      // Mostrar indicadores
-      document.getElementById("promedio").textContent = data.promedio.toFixed(3);
-      document.getElementById("episodios").textContent = formData.get("episodios");
-      document.getElementById("epsilon").textContent = formData.get("epsilon");
-
-      // Refrescar gráfico (evita caché del navegador)
-      document.getElementById("graf-recompensas").src = data.ruta_grafica + "?ts=" + Date.now();
-
-      alert("Entrenamiento completado");
-    });
-}
-
-  function probar() {
-    fetch("/rl_probar")
+    document.getElementById("loading-spinner").style.display = "block";
+    
+    const scenarioData = { start: start, goal: goal, holes: holes };
+    
+    fetch("/rl_entrenar", { method: "POST" })
       .then(r => r.json())
       .then(data => {
+        document.getElementById("loading-spinner").style.display = "none";
+        document.getElementById("promedio").textContent = data.promedio.toFixed(3);
+        document.getElementById("episodiosEntrenados").textContent = "1000";
+        document.getElementById("epsilonFinal").textContent = "0.01";
+        document.getElementById("graf-recompensas").src = data.ruta_grafica + "?ts=" + Date.now();
+        alert("Entrenamiento completado con 1000 episodios");
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById("loading-spinner").style.display = "none";
+        alert("Error durante el entrenamiento. Revisa la consola para más detalles.");
+      });
+  }
+  
+  function mostrarResultados(data) {
+    document.getElementById("card-resultados").style.display = "block";
+    const estadoElemento = document.getElementById("estado-prueba");
+    if (data.llego_a_meta) {
+      estadoElemento.innerHTML = '<i class="bi bi-check-circle-fill text-success me-1"></i>Éxito: Llegó a la meta';
+      estadoElemento.className = "fw-bold text-success";
+    } else {
+      estadoElemento.innerHTML = '<i class="bi bi-x-circle-fill text-danger me-1"></i>Fallo: No llegó a la meta';
+      estadoElemento.className = "fw-bold text-danger";
+    }
+    document.getElementById("fallos").textContent = data.fallos;
+  }
+
+  function probar() {
+    document.getElementById("status-message").textContent = "Ejecutando prueba y aprendiendo...";
+    
+    const scenarioData = { start: start, goal: goal, holes: holes };
+
+    fetch("/rl_probar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(scenarioData)
+    })
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById("status-message").textContent = "";
         let camino = data.camino;
         let i = 0;
+        renderGrid([]);
+
         let interval = setInterval(() => {
+          const currentCell = camino[i];
           renderGrid(camino.slice(0, i + 1));
+
+          const isGoal = currentCell[0] === goal[0] && currentCell[1] === goal[1];
+          const isHole = holes.some(h => h[0] === currentCell[0] && h[1] === currentCell[1]);
+
+          if (isGoal || isHole) {
+            clearInterval(interval);
+            mostrarResultados(data);
+            if (isGoal) {
+              alert("✅ ¡Éxito! El agente llegó a la meta.");
+            } else {
+              alert("❌ ¡Fallo! El agente se cayó, pero ha aprendido de su error. ¡Inténtalo de nuevo!");
+            }
+          }
+          
           i++;
-          if (i >= camino.length) clearInterval(interval);
+          if (i >= camino.length) { 
+              clearInterval(interval);
+              mostrarResultados(data);
+          }
         }, 500);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById("status-message").textContent = "Error en la prueba.";
+        alert("Error durante la prueba. Revisa la consola para más detalles.");
+      });
+  }
+
+  // <-- NUEVA FUNCIÓN para reiniciar el agente
+  function reiniciarAgente() {
+    document.getElementById("loading-spinner").style.display = "block";
+    document.getElementById("status-message").textContent = "Reiniciando memoria del agente...";
+    
+    const scenarioData = { start: start, goal: goal, holes: holes };
+
+    fetch("/rl_reiniciar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(scenarioData)
+    })
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById("loading-spinner").style.display = "none";
+        document.getElementById("status-message").textContent = "";
+        alert("🔄 " + data.message);
+        renderGrid([]); // Limpiar la cuadrícula visualmente
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById("loading-spinner").style.display = "none";
+        document.getElementById("status-message").textContent = "Error al reiniciar.";
+        alert("Error al reiniciar el agente. Revisa la consola.");
       });
   }
 
   function reset() {
-    const randomHole1 = [Math.floor(Math.random() * height), Math.floor(Math.random() * width)];
-    const randomHole2 = [Math.floor(Math.random() * height), Math.floor(Math.random() * width)];
-    const randomGoal = [Math.floor(Math.random() * height), Math.floor(Math.random() * width)];
-
-    holes.length = 0;
-    holes.push(randomHole1, randomHole2);
-
-    goal[0] = randomGoal[0];
-    goal[1] = randomGoal[1];
+    const positions = [];
+    start = [0, 0];
+    positions.push(start);
+    
+    let goalPos;
+    do {
+      goalPos = [Math.floor(Math.random() * height), Math.floor(Math.random() * width)];
+    } while (positions.some(p => p[0] === goalPos[0] && p[1] === goalPos[1]));
+    goal = goalPos;
+    positions.push(goal);
+    
+    holes = [];
+    for (let i = 0; i < 2; i++) {
+      let holePos;
+      do {
+        holePos = [Math.floor(Math.random() * height), Math.floor(Math.random() * width)];
+      } while (positions.some(p => p[0] === holePos[0] && p[1] === holePos[1]));
+      
+      holes.push(holePos);
+      positions.push(holePos);
+    }
 
     renderGrid([]);
     document.getElementById("promedio").textContent = "-";
+    document.getElementById("episodiosEntrenados").textContent = "-";
+    document.getElementById("epsilonFinal").textContent = "-";
+    document.getElementById("status-message").textContent = "";
+    
+    document.getElementById("card-resultados").style.display = "none";
+    document.getElementById("estado-prueba").textContent = "";
+    document.getElementById("fallos").textContent = "-";
   }
 
   renderGrid();
